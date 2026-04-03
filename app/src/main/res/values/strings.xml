@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Mini Moodle</string>
+    <string name="addresse_courriel">Addresse Courriel</string>
+    <string name="mot_de_passe">Mot De Passe</string>
+    <string name="se_connecter">Se Connecter</string>
+    <string name="s_inscrire">S\'inscrire</string>
+    <string name="mini_moodle">Mini Moodle</string>
+    <string name="bienvenue">Bienvenue !</string>
+    <string name="veuilliez_vous_connecter_pour_continuier">Veuilliez vous connecter pour continuier</string>
+    <string name="vous_n_avez_pas_de_compte">Vous n\'avez pas de compte ?</string>
+    <string name="courriel">Courriel</string>
+    <string name="nom">Nom</string>
+    <string name="numero_de_telephone">Numero De Telephone</string>
+    <string name="prenom">Prenom</string>
+    <string name="vous_avez_deja_un_account">Vous Avez Deja un Account ?</string>
+    <string name="inscription">Inscription</string>
 </resources>

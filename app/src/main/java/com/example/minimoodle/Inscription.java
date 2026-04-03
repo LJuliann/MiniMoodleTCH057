@@ -16,10 +16,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class Inscription extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnConnect,btnInscription;
-    EditText etAdresse, etMotDePasse;
+    EditText etNom,etPrenom,etCourriel,etTelephone;
+    EditText motDePasse;
+    Button btnInscription, btnLogin;
 
     ActivityResultLauncher<Intent> activityResultLauncher;
     Intent intent;
@@ -28,21 +29,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_inscription);
+
+        //EditText
+        etNom = findViewById(R.id.etInscriptionNom);
+        etPrenom = findViewById(R.id.etInscriptionPrenom);
+        etTelephone = findViewById(R.id.etInscriptionNumeroTelephone);
+        etCourriel = findViewById(R.id.etInscriptionCourriel);
+        motDePasse = findViewById(R.id.etInscriptionMotDePasse);
 
         //Button
-        btnConnect = findViewById(R.id.btnLoginConnection);
-        btnConnect.setOnClickListener(this);
-
-        btnInscription = findViewById(R.id.btnLoginInscription);
+        btnInscription = findViewById(R.id.btnInscriptionInscrire);
         btnInscription.setOnClickListener(this);
 
-        //Editext
-        etAdresse = findViewById(R.id.etLoginAdresse);
-        etMotDePasse = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnInscriptionConnection);
+        btnLogin.setOnClickListener(this);
 
-
-
+        //ActivityResultLauncher
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
@@ -61,14 +64,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-      //Quand la personne se connecte.
-        if(v == btnConnect){
+        //Quand la personne s'inscrit.
+        if(v == btnInscription){
 
         }
 
-        //Si la personne n'a pas de compte et veut se connecter
-        if(v == btnInscription){
-            intent = new Intent(this, Inscription.class);
+        //Si la personne veut revenir au login.
+        if(v == btnLogin){
+            intent = new Intent(this, MainActivity.class);
             activityResultLauncher.launch(intent);
         }
 
