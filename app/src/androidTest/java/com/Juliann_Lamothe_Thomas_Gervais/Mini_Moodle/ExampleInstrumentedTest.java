@@ -1,4 +1,4 @@
-package com.example.minimoodle;
+package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.minimoodle", appContext.getPackageName());
+        assertEquals("com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle", appContext.getPackageName());
     }
 }

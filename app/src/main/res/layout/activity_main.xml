@@ -68,8 +68,8 @@
 
     <Button
         android:id="@+id/btnLoginConnection"
-        android:layout_width="373dp"
-        android:layout_height="56dp"
+        android:layout_width="332dp"
+        android:layout_height="57dp"
         android:backgroundTint="#000000"
         android:text="@string/se_connecter"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"

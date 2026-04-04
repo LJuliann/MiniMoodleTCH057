@@ -1,4 +1,4 @@
-package com.example.minimoodle;
+package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +16,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class Inscription extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText etNom,etPrenom,etCourriel,etTelephone;
-    EditText motDePasse;
-    Button btnInscription, btnLogin;
+    Button btnConnect,btnInscription;
+    EditText etAdresse, etMotDePasse;
 
     ActivityResultLauncher<Intent> activityResultLauncher;
     Intent intent;
@@ -29,23 +28,21 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_inscription);
-
-        //EditText
-        etNom = findViewById(R.id.etInscriptionNom);
-        etPrenom = findViewById(R.id.etInscriptionPrenom);
-        etTelephone = findViewById(R.id.etInscriptionNumeroTelephone);
-        etCourriel = findViewById(R.id.etInscriptionCourriel);
-        motDePasse = findViewById(R.id.etInscriptionMotDePasse);
+        setContentView(R.layout.activity_main);
 
         //Button
-        btnInscription = findViewById(R.id.btnInscriptionInscrire);
+        btnConnect = findViewById(R.id.btnLoginConnection);
+        btnConnect.setOnClickListener(this);
+
+        btnInscription = findViewById(R.id.btnLoginInscription);
         btnInscription.setOnClickListener(this);
 
-        btnLogin = findViewById(R.id.btnInscriptionConnection);
-        btnLogin.setOnClickListener(this);
+        //Editext
+        etAdresse = findViewById(R.id.etLoginAdresse);
+        etMotDePasse = findViewById(R.id.etPassword);
 
-        //ActivityResultLauncher
+
+
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
@@ -64,14 +61,14 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
-        //Quand la personne s'inscrit.
-        if(v == btnInscription){
+      //Quand la personne se connecte.
+        if(v == btnConnect){
 
         }
 
-        //Si la personne veut revenir au login.
-        if(v == btnLogin){
-            intent = new Intent(this, MainActivity.class);
+        //Si la personne n'a pas de compte et veut se connecter
+        if(v == btnInscription){
+            intent = new Intent(this, Inscription.class);
             activityResultLauncher.launch(intent);
         }
 
