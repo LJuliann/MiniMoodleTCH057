@@ -1,10 +1,12 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -17,6 +19,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vuewModel.UsersViewModel;
 
 public class Inscription extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,6 +30,7 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
 
     ActivityResultLauncher<Intent> activityResultLauncher;
     Intent intent;
+    UsersViewModel usersViewModel = new UsersViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,16 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
             }
         });
 
+        usersViewModel.getSuccess().observe(this, success -> {
+                    if (success) {
+                        Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
+                        intent = new Intent(this, MainActivity.class);
+                        activityResultLauncher.launch(intent);
+                    } else {
+                        Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -68,7 +83,22 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
 
         //Quand la personne s'inscrit.
         if(v == btnInscription){
-
+            if (checkSelfPermission("android.permission.INTERNET") == PackageManager.PERMISSION_GRANTED) {
+                if(etNom.getText().toString().isEmpty() || etPrenom.getText().toString().isEmpty() || etCourriel.getText().toString().isEmpty() ||
+                        etTelephone.getText().toString().isEmpty() || motDePasse.getText().toString().isEmpty()){
+                    Toast.makeText(this,"veuilliez de remplir tous les champs",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String nom = etNom.getText().toString();
+                String prenom = etPrenom.getText().toString();
+                String courriel = etCourriel.getText().toString();
+                String telephone = etTelephone.getText().toString();
+                String password = motDePasse.getText().toString();
+                Users users = new Users("", courriel, password, nom, prenom, telephone, "", "");
+                usersViewModel.enregistereUser(users);
+            } else {
+                requestPermissions(new String[]{"android.permission.INTERNET"},1);
+            }
         }
 
         //Si la personne veut revenir au login.

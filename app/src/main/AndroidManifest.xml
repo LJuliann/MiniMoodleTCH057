@@ -14,7 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MiniMoodle"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".vue.ProfilUtilisateur"
+            android:exported="false" />
+        <activity
+            android:name=".vue.ListeDesCours"
+            android:exported="false" />
         <activity
             android:name=".vue.Inscription"
             android:exported="false" />

@@ -14,4 +14,11 @@
     <string name="prenom">Prenom</string>
     <string name="vous_avez_deja_un_account">Vous Avez Deja un Account ?</string>
     <string name="inscription">Inscription</string>
+    <string name="accepter">Accepter</string>
+    <string name="retour">Retour</string>
+    <string name="password">Password</string>
+    <string name="telephone">Telephone</string>
+    <string name="profil">Profil</string>
+    <string name="liste_des_cours">Liste des cours</string>
+    <string name="nom_d_utilisateur">nom d\'utilisateur</string>
 </resources>

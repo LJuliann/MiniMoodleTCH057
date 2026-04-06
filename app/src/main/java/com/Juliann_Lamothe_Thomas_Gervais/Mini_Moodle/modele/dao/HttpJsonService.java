@@ -71,13 +71,28 @@ public class HttpJsonService {
         String url = URL_POINT_ENTRER + "/users";
 
         Request request = new Request.Builder()
-                .url(URL_POINT_ENTRER)
+                .url(url)
                 .post(corpsRequete)
                 .build();
         Response response = okHttpClient.newCall(request).execute();
-        return response.code() == 200;
-
-
+        return response.code() == 201;
     }
+
+    public boolean connexion(String courriel, String password) throws IOException, JSONException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        String url = URL_POINT_ENTRER + "/users?email=" + courriel + "&password=" + password;
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+        String body = response.body().string();
+        return !body.equals(("[]"));
+    }
+
+
+
 
 }

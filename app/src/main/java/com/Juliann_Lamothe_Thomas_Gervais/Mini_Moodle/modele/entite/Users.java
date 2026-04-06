@@ -3,6 +3,17 @@ package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite;
 public class Users {
     private String username,email,password,nom,prenom,telephone,photoUrl,id;
 
+    public Users(String username, String email, String password, String nom, String prenom, String telephone, String photoUrl, String id){
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.telephone = telephone;
+        this.photoUrl = photoUrl;
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }

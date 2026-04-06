@@ -1,10 +1,12 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -17,14 +19,17 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vuewModel.UsersViewModel;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btnConnect,btnInscription;
     EditText etAdresse, etMotDePasse;
-
     ActivityResultLauncher<Intent> activityResultLauncher;
     Intent intent;
+
+    UsersViewModel usersViewModel = new UsersViewModel();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        usersViewModel.getSuccess().observe(this, success -> {
+                    if(success){
+                        Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
+                        intent = new Intent(this, ListeDesCours.class);
+                        activityResultLauncher.launch(intent);
+                    } else {
+                        Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+        );
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -65,10 +82,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
       //Quand la personne se connecte.
         if(v == btnConnect){
+            if(checkSelfPermission("android.permission.INTERNET") == PackageManager.PERMISSION_GRANTED){
+                usersViewModel.connexion(etAdresse.getText().toString(),etMotDePasse.getText().toString());
+
+            } else {
+                requestPermissions(new String[]{"android.permission.INTERNET"},1);
+            }
 
         }
 
-        //Si la personne n'a pas de compte et veut se connecter
+        //Si la personne n'a pas de compte et veut s'inscrire
         if(v == btnInscription){
             intent = new Intent(this, Inscription.class);
             activityResultLauncher.launch(intent);
