@@ -21,4 +21,7 @@
     <string name="profil">Profil</string>
     <string name="liste_des_cours">Liste des cours</string>
     <string name="nom_d_utilisateur">nom d\'utilisateur</string>
+    <string name="rechercher">Rechercher</string>
+    <string name="recycler_View_Nom_Prof">TextView</string>
+    <string name="recycler_view_text_prof">TextView</string>
 </resources>

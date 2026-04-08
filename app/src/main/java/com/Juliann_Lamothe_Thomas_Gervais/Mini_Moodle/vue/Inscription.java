@@ -63,7 +63,7 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
         usersViewModel.getSuccess().observe(this, success -> {
                     if (success) {
                         Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
-                        intent = new Intent(this, MainActivity.class);
+                        intent = new Intent(this, ListeDesCours.class);
                         activityResultLauncher.launch(intent);
                     } else {
                         Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();

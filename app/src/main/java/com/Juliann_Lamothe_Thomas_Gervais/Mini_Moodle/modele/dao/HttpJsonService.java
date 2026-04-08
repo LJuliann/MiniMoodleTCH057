@@ -2,6 +2,7 @@ package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.dao;
 
 import android.util.Log;
 
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,6 +54,21 @@ public class HttpJsonService {
     }
 
 
+    //Recupere la liste des cours
+    public List<Courses> getCourses() throws IOException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTRER + "/courses")
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+        String jsonStr = response.body().string();
+        try {
+            return Arrays.asList(new ObjectMapper().readValue(jsonStr, Courses[].class));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //Passe un utilisateur a la methode et envois un post pour le creer.
     public boolean enregistrerUser(Users user) throws IOException, JSONException {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -93,8 +109,6 @@ public class HttpJsonService {
                 .build();
         Response response = okHttpClient.newCall(request).execute();
         String body = response.body().string();
-        Log.d("HttpJsonService", "URL: " + url);
-        Log.d("HttpJsonService", "Body: " + body);
         return !body.equals("[]");
     }
 
