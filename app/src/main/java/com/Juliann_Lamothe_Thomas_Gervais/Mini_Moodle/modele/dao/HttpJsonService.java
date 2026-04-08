@@ -81,7 +81,11 @@ public class HttpJsonService {
     public boolean connexion(String courriel, String password) throws IOException, JSONException {
         OkHttpClient okHttpClient = new OkHttpClient();
 
-        String url = URL_POINT_ENTRER + "/users?email=" + courriel + "&password=" + password;
+        okhttp3.HttpUrl url = okhttp3.HttpUrl.parse(URL_POINT_ENTRER + "/users")
+                .newBuilder()
+                .addQueryParameter("email", courriel)
+                .addQueryParameter("password", password)
+                .build();
 
         Request request = new Request.Builder()
                 .url(url)
@@ -89,7 +93,9 @@ public class HttpJsonService {
                 .build();
         Response response = okHttpClient.newCall(request).execute();
         String body = response.body().string();
-        return !body.equals(("[]"));
+        Log.d("HttpJsonService", "URL: " + url);
+        Log.d("HttpJsonService", "Body: " + body);
+        return !body.equals("[]");
     }
 
 
