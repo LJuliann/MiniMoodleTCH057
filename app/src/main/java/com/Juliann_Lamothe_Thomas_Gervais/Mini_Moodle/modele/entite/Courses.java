@@ -1,5 +1,8 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Courses {
 
     private String id,code,title,description,teacher,session,imageUrl;

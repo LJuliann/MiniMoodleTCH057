@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.adapteur.CoursesAdapter;
-import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vuewModel.CoursesViewModel;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.CoursesViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -22,7 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.SessionDao;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
-import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vuewModel.UsersViewModel;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.UsersViewModel;
 
 import java.util.ArrayList;
 

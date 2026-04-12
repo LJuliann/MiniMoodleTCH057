@@ -2,7 +2,9 @@ package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.dao;
 
 import android.util.Log;
 
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Assignments;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Quizzes;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -92,6 +94,40 @@ public class HttpJsonService {
                 .build();
         Response response = okHttpClient.newCall(request).execute();
         return response.code() == 201;
+    }
+
+    public Courses getCourseById(String id) throws IOException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okhttp3.HttpUrl url = okhttp3.HttpUrl.parse(URL_POINT_ENTRER + "/courses")
+                .newBuilder()
+                .addQueryParameter("id", id)
+                .build();
+        Request request = new Request.Builder().url(url).get().build();
+        String body = okHttpClient.newCall(request).execute().body().string();
+        Courses[] result = new ObjectMapper().readValue(body, Courses[].class);
+        return result.length > 0 ? result[0] : null;
+    }
+
+    public List<Assignments> getAssignmentsByCourseId(String courseId) throws IOException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okhttp3.HttpUrl url = okhttp3.HttpUrl.parse(URL_POINT_ENTRER + "/assignments")
+                .newBuilder()
+                .addQueryParameter("courseId", courseId)
+                .build();
+        Request request = new Request.Builder().url(url).get().build();
+        String body = okHttpClient.newCall(request).execute().body().string();
+        return Arrays.asList(new ObjectMapper().readValue(body, Assignments[].class));
+    }
+
+    public List<Quizzes> getQuizzesByCourseId(String courseId) throws IOException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okhttp3.HttpUrl url = okhttp3.HttpUrl.parse(URL_POINT_ENTRER + "/quizzes")
+                .newBuilder()
+                .addQueryParameter("courseId", courseId)
+                .build();
+        Request request = new Request.Builder().url(url).get().build();
+        String body = okHttpClient.newCall(request).execute().body().string();
+        return Arrays.asList(new ObjectMapper().readValue(body, Quizzes[].class));
     }
 
     public Users connexion(String courriel, String password) throws IOException {

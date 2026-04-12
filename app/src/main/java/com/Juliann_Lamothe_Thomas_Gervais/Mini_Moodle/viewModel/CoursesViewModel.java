@@ -1,4 +1,4 @@
-package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vuewModel;
+package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

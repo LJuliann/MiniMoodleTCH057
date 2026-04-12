@@ -10,10 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.adapteur.DetailCoursAdapter;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.DetailCoursViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -24,14 +26,11 @@ public class DetailCours extends AppCompatActivity {
     TabLayout tlDetail;
     ViewPager2 vpDetail;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_detail_cours);
-
-        DetailCoursAdapter detailCoursAdapter = new DetailCoursAdapter(this);
 
         btnDetailRetour = findViewById(R.id.btnDetailRetour);
         btnDetailRetour.setOnClickListener(v -> finish());
@@ -40,7 +39,7 @@ public class DetailCours extends AppCompatActivity {
         tlDetail = findViewById(R.id.tlDetail);
         vpDetail = findViewById(R.id.vpDetail);
 
-        vpDetail.setAdapter(detailCoursAdapter);
+        vpDetail.setAdapter(new DetailCoursAdapter(this));
 
         new TabLayoutMediator(tlDetail, vpDetail, (tab, position) -> {
             switch (position) {
@@ -51,11 +50,12 @@ public class DetailCours extends AppCompatActivity {
             }
         }).attach();
 
-
         String id = getIntent().getStringExtra("id");
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
 
-
+        DetailCoursViewModel viewModel = new ViewModelProvider(this).get(DetailCoursViewModel.class);
+        viewModel.getCours().observe(this, cours -> tvDetailNomCours.setText(cours.getTitle()));
+        viewModel.getMessage().observe(this, msg -> Toast.makeText(this, msg, Toast.LENGTH_SHORT).show());
+        viewModel.charger(id);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
