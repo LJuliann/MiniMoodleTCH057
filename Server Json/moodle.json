@@ -114,7 +114,7 @@
       "title": "Système d’exploitation",
       "description": "Fonctionnement système et services Internet.",
       "teacher": "Luc Lefebvre",
-      "session": "Hiver 2026",
+      "session": "Automne 2025",
       "imageUrl": "https://example.com/os.png",
       "annonces": [
         "Mise à jour des serveurs terminée."
@@ -126,7 +126,7 @@
       "title": "Automates programmables",
       "description": "Programmation GRAFCET et séquences.",
       "teacher": "Julie Gagnon",
-      "session": "Hiver 2026",
+      "session": "Automne 2025",
       "imageUrl": "https://example.com/plc.png",
       "annonces": [
         "Séance de labo mardi soir."

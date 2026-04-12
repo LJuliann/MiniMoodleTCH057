@@ -17,10 +17,15 @@ import android.widget.TextView;
 
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHolder> {
-    private final List<Courses> listeCours;
+    private List<Courses> listeCours;
 
     public CoursesAdapter(List<Courses> listeCours) {
         this.listeCours = listeCours;
+    }
+
+    public void updateList(List<Courses> nouvelleListe) {
+        this.listeCours = nouvelleListe;
+        notifyDataSetChanged();
     }
 
     @NonNull

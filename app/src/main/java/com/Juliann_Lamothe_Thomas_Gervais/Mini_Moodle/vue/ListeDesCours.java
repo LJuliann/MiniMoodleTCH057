@@ -1,7 +1,13 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +32,9 @@ public class ListeDesCours extends AppCompatActivity {
     CoursesViewModel coursesViewModel;
     RecyclerView recyclerView;
     Button btnListeRetour;
+    Spinner spinner;
+    EditText editTextRecherche;
+    CoursesAdapter adapter;
 
 
     @Override
@@ -37,20 +46,49 @@ public class ListeDesCours extends AppCompatActivity {
         btnListeRetour = findViewById(R.id.btnListeRetour);
         btnListeRetour.setOnClickListener(v -> finish());
 
-
         recyclerView = findViewById(R.id.rvListeCours);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
+        spinner = findViewById(R.id.spinner);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item,
+                new String[]{"Tous", "Actifs", "Terminés"});
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+
+        adapter = new CoursesAdapter(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
+
         coursesViewModel = new ViewModelProvider(this).get(CoursesViewModel.class);
 
         coursesViewModel.getCourses().observe(this, courses -> {
-            CoursesAdapter adapter = new CoursesAdapter(courses);
-            recyclerView.setAdapter(adapter);
+            adapter.updateList(courses);
         });
 
         coursesViewModel.getMessage().observe(this, msg -> {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        });
+
+        editTextRecherche = findViewById(R.id.editTextText);
+        editTextRecherche.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                coursesViewModel.rechercher(s.toString());
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
+                coursesViewModel.filtrer(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         List<String> enrolledIds = getIntent().getStringArrayListExtra("enrolledCourseIds");
@@ -62,4 +100,5 @@ public class ListeDesCours extends AppCompatActivity {
             return insets;
         });
     }
+
 }
