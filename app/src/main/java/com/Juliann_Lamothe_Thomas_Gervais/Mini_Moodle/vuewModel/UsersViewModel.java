@@ -19,6 +19,7 @@ public class UsersViewModel extends ViewModel {
     private final MutableLiveData<List<Users>> users = new MutableLiveData<>();
     private final MutableLiveData<String> message = new MutableLiveData<>();
     private final MutableLiveData<Boolean> success = new MutableLiveData<>();
+    private final MutableLiveData<Users> connectedUser = new MutableLiveData<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public LiveData<List<Users>> getUsers() {
@@ -33,7 +34,10 @@ public class UsersViewModel extends ViewModel {
         return success;
     }
 
-    //Connexion utilisateur
+    public LiveData<Users> getConnectedUser() {
+        return connectedUser;
+    }
+
     public void connexion(String courriel, String password) {
         if (courriel.isEmpty() || password.isEmpty()) {
             message.postValue("Veuillez remplir tous les champs");
@@ -41,16 +45,18 @@ public class UsersViewModel extends ViewModel {
         }
         executorService.execute(() -> {
             try {
-                boolean reussite = UsersDao.connexion(courriel, password);
-                if (reussite) {
+                Users user = UsersDao.connexion(courriel, password);
+                if (user != null) {
+                    connectedUser.postValue(user);
                     message.postValue("Connexion réussie");
                     success.postValue(true);
                 } else {
-                    message.postValue("Connexion échouée");
+                    message.postValue("Courriel ou mot de passe incorrect");
                     success.postValue(false);
                 }
-            } catch (IOException | JSONException e) {
-                throw new RuntimeException(e);
+            } catch (IOException e) {
+                message.postValue("Erreur de connexion au serveur");
+                success.postValue(false);
             }
         });
     }

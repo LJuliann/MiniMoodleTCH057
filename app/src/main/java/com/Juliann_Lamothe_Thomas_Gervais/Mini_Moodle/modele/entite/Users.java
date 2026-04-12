@@ -1,7 +1,13 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Users {
     private String username,email,password,nom,prenom,telephone,photoUrl,id;
+    private java.util.List<String> enrolledCourseIds;
+
+    public Users() {}
 
     public Users(String username, String email, String password, String nom, String prenom, String telephone, String photoUrl, String id){
         this.username = username;
@@ -78,5 +84,12 @@ public class Users {
         this.id = id;
     }
 
+    public java.util.List<String> getEnrolledCourseIds() {
+        return enrolledCourseIds;
+    }
+
+    public void setEnrolledCourseIds(java.util.List<String> enrolledCourseIds) {
+        this.enrolledCourseIds = enrolledCourseIds;
+    }
 
 }

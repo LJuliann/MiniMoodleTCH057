@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -19,7 +20,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.SessionDao;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vuewModel.UsersViewModel;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText etAdresse, etMotDePasse;
     ActivityResultLauncher<Intent> activityResultLauncher;
     Intent intent;
+
+    CheckBox cbConnexion;
 
     UsersViewModel usersViewModel = new UsersViewModel();
 
@@ -48,6 +55,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         etAdresse = findViewById(R.id.etLoginAdresse);
         etMotDePasse = findViewById(R.id.etPassword);
 
+        //CheckBox
+        cbConnexion = findViewById(R.id.cbConnexion);
+
+        String[] session = SessionDao.getSession(this);
+        if (session != null) {
+            etAdresse.setText(session[0]);
+            etMotDePasse.setText(session[1]);
+            cbConnexion.setChecked(true);
+        }
 
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -58,16 +74,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         usersViewModel.getSuccess().observe(this, success -> {
-                    if(success){
-                        Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
-                        intent = new Intent(this, ListeDesCours.class);
-                        activityResultLauncher.launch(intent);
-                    } else {
-                        Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
-                    }
-
+            Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
+            if (success) {
+                if (cbConnexion.isChecked()) {
+                    SessionDao.sauvegarderSession(this, etAdresse.getText().toString(), etMotDePasse.getText().toString());
+                } else {
+                    SessionDao.supprimerSession(this);
                 }
-        );
+                Users user = usersViewModel.getConnectedUser().getValue();
+                intent = new Intent(this, ListeDesCours.class);
+                if (user != null && user.getEnrolledCourseIds() != null) {
+                    intent.putStringArrayListExtra("enrolledCourseIds", new ArrayList<>(user.getEnrolledCourseIds()));
+                }
+                activityResultLauncher.launch(intent);
+            }
+        });
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

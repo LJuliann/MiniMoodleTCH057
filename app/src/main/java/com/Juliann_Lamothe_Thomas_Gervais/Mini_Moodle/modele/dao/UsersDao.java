@@ -9,11 +9,7 @@ import java.util.List;
 
 public class UsersDao {
 
-    public static List<Users> getUsers() throws IOException, JSONException{
-        return new HttpJsonService().getUsers();
-    }
-
-    public static boolean connexion(String courriel, String password) throws IOException, JSONException{
+    public static Users connexion(String courriel, String password) throws IOException {
         return new HttpJsonService().connexion(courriel, password);
     }
 

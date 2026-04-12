@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MiniMoodle"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".vue.DetailCours"
+            android:exported="false" />
+        <activity
             android:name=".vue.ProfilUtilisateur"
             android:exported="false" />
         <activity

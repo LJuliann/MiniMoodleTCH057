@@ -1,5 +1,7 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.adapteur;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.DetailCours;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.ListeDesCours;
+
 import android.widget.TextView;
 
 
@@ -30,6 +35,8 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         Courses cours = listeCours.get(position);
         holder.tvNomCours.setText(cours.getTitle());
         holder.tvNomProf.setText(cours.getTeacher());
+        holder.coursId = cours.getId();
+
     }
 
     @Override
@@ -37,14 +44,26 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         return listeCours.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvNomCours;
         TextView tvNomProf;
+        String coursId = "";
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+
             tvNomCours = itemView.findViewById(R.id.tvRecyclerNomCours);
             tvNomProf = itemView.findViewById(R.id.tvRecyclerViewNomProf);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Context context = itemView.getContext();
+            Intent intent = new Intent(context, DetailCours.class);
+            intent.putExtra("id", coursId);
+            v.getContext().startActivity(intent);
         }
     }
 }

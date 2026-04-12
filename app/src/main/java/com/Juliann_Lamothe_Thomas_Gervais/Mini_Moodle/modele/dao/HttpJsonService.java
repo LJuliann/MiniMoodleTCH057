@@ -94,7 +94,7 @@ public class HttpJsonService {
         return response.code() == 201;
     }
 
-    public boolean connexion(String courriel, String password) throws IOException, JSONException {
+    public Users connexion(String courriel, String password) throws IOException {
         OkHttpClient okHttpClient = new OkHttpClient();
 
         okhttp3.HttpUrl url = okhttp3.HttpUrl.parse(URL_POINT_ENTRER + "/users")
@@ -109,7 +109,9 @@ public class HttpJsonService {
                 .build();
         Response response = okHttpClient.newCall(request).execute();
         String body = response.body().string();
-        return !body.equals("[]");
+        if (body.equals("[]")) return null;
+        Users[] users = new ObjectMapper().readValue(body, Users[].class);
+        return users.length > 0 ? users[0] : null;
     }
 
 

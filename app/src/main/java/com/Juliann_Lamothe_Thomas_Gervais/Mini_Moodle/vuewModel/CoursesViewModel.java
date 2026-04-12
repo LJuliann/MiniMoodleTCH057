@@ -8,6 +8,7 @@ import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.dao.CoursesDao;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,11 +27,17 @@ public class CoursesViewModel extends ViewModel {
         return message;
     }
 
-    public void chargerCourses() {
+    public void chargerCourses(List<String> enrolledIds) {
         executorService.execute(() -> {
             try {
-                List<Courses> liste = CoursesDao.getCourses();
-                courses.postValue(liste);
+                List<Courses> tousLesCours = CoursesDao.getCourses();
+                List<Courses> coursInscrits = new ArrayList<>();
+                for (Courses cours : tousLesCours) {
+                    if (enrolledIds.contains(cours.getId())) {
+                        coursInscrits.add(cours);
+                    }
+                }
+                courses.postValue(coursInscrits);
             } catch (IOException e) {
                 message.postValue("Erreur de chargement des cours");
             }

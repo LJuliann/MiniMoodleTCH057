@@ -24,4 +24,8 @@
     <string name="rechercher">Rechercher</string>
     <string name="recycler_View_Nom_Prof">TextView</string>
     <string name="recycler_view_text_prof">TextView</string>
+    <string name="nom_cours">nom Cours</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="se_souvien_de_moi">se souvien de moi</string>
 </resources>
