@@ -137,32 +137,104 @@
     {
       "id": "1",
       "courseId": "1",
-      "title": "Quiz 1",
+      "title": "Architecture : Composants",
+      "duration": 10,
       "questions": [
         {
           "id": "1",
           "question": "Qu'est-ce qu'un CPU ?",
           "options": [
-            "Traitement",
-            "Mémoire",
-            "Écran"
+            "Unité de traitement",
+            "Mémoire vive",
+            "Carte graphique",
+            "Disque dur"
           ],
           "correctOption": 0
+        },
+        {
+          "id": "2",
+          "question": "La RAM est une mémoire :",
+          "options": [
+            "Volatile",
+            "Permanente",
+            "Optique",
+            "Magnétique"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "3",
+          "question": "Un GPU est principalement utilisé pour :",
+          "options": [
+            "Calculs graphiques",
+            "Stocker des fichiers",
+            "Gérer le réseau",
+            "Alimenter le PC"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "4",
+          "question": "Le disque SSD est plus rapide que le HDD.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "5",
+          "question": "La ROM peut être modifiée librement par l'utilisateur.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 1
         }
       ]
     },
     {
       "id": "2",
       "courseId": "1",
-      "title": "Quiz 2",
+      "title": "Architecture : Mémoire",
+      "duration": 8,
       "questions": [
         {
-          "id": "5",
+          "id": "6",
           "question": "ROM signifie ?",
           "options": [
             "Read-Only Memory",
-            "Random",
-            "Rapid"
+            "Random Object Memory",
+            "Rapid Output Module"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "7",
+          "question": "L'unité de base de la mémoire est :",
+          "options": [
+            "Le bit",
+            "L'octet",
+            "Le kilooctet",
+            "Le registre"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "8",
+          "question": "Le cache L1 est plus lent que le cache L2.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 1
+        },
+        {
+          "id": "9",
+          "question": "La mémoire virtuelle utilise le disque dur comme extension de la RAM.",
+          "options": [
+            "Vrai",
+            "Faux"
           ],
           "correctOption": 0
         }
@@ -171,15 +243,45 @@
     {
       "id": "3",
       "courseId": "2",
-      "title": "Quiz 1",
+      "title": "Bases de données : Concepts",
+      "duration": 10,
       "questions": [
         {
-          "id": "9",
+          "id": "10",
           "question": "SGBD signifie ?",
           "options": [
-            "Base de Données",
-            "Générique",
-            "Gestion"
+            "Système de Gestion de Bases de Données",
+            "Serveur Générique de Base",
+            "Système Global de Données"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "11",
+          "question": "Une clé primaire identifie de façon unique chaque ligne.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "12",
+          "question": "SQL est un langage :",
+          "options": [
+            "De requêtes",
+            "De programmation orienté objet",
+            "De balisage",
+            "Assembleur"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "13",
+          "question": "Une clé étrangère relie deux tables entre elles.",
+          "options": [
+            "Vrai",
+            "Faux"
           ],
           "correctOption": 0
         }
@@ -188,15 +290,45 @@
     {
       "id": "4",
       "courseId": "2",
-      "title": "Quiz 2",
+      "title": "Bases de données : SQL",
+      "duration": 12,
       "questions": [
         {
-          "id": "13",
+          "id": "14",
           "question": "CRUD signifie ?",
           "options": [
             "Create, Read, Update, Delete",
-            "Copy",
-            "Compute"
+            "Copy, Run, Use, Delete",
+            "Compute, Resolve, Update, Display"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "15",
+          "question": "La commande SELECT sert à :",
+          "options": [
+            "Lire des données",
+            "Supprimer une table",
+            "Créer une base",
+            "Mettre à jour des lignes"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "16",
+          "question": "DELETE FROM supprime des lignes sans supprimer la table.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "17",
+          "question": "ORDER BY trie les résultats d'une requête.",
+          "options": [
+            "Vrai",
+            "Faux"
           ],
           "correctOption": 0
         }
@@ -205,15 +337,45 @@
     {
       "id": "5",
       "courseId": "3",
-      "title": "Quiz 1",
+      "title": "Mobile : Android Studio",
+      "duration": 8,
       "questions": [
         {
-          "id": "17",
+          "id": "18",
           "question": "Android Studio est un ?",
           "options": [
             "IDE",
             "SGBD",
-            "OS"
+            "Système d'exploitation",
+            "Navigateur"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "19",
+          "question": "Le fichier AndroidManifest.xml déclare les activités.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "20",
+          "question": "MVVM signifie :",
+          "options": [
+            "Model-View-ViewModel",
+            "Module-View-Value-Model",
+            "Main-View-Variable-Map"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "21",
+          "question": "LiveData est observé depuis le ViewModel.",
+          "options": [
+            "Vrai",
+            "Faux"
           ],
           "correctOption": 0
         }
@@ -222,15 +384,37 @@
     {
       "id": "6",
       "courseId": "3",
-      "title": "Quiz 2",
+      "title": "Mobile : Composants UI",
+      "duration": 8,
       "questions": [
         {
-          "id": "21",
+          "id": "22",
           "question": "RecyclerView sert à ?",
           "options": [
-            "Listes",
-            "Fichiers",
-            "Réseau"
+            "Afficher des listes longues",
+            "Gérer des fichiers",
+            "Faire des requêtes réseau",
+            "Stocker des données"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "23",
+          "question": "Un Fragment est une sous-partie d'une Activity.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "24",
+          "question": "ConstraintLayout est :",
+          "options": [
+            "Un layout flexible avec contraintes",
+            "Un composant audio",
+            "Une base de données",
+            "Un type de fragment"
           ],
           "correctOption": 0
         }
@@ -239,15 +423,36 @@
     {
       "id": "7",
       "courseId": "4",
-      "title": "Quiz 1",
+      "title": "Web : HTML",
+      "duration": 8,
       "questions": [
         {
           "id": "25",
           "question": "HTML signifie ?",
           "options": [
-            "Markup Language",
-            "Transfer",
-            "HighText"
+            "HyperText Markup Language",
+            "High Transfer Language",
+            "HyperText Module Link"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "26",
+          "question": "La balise <p> sert à créer un paragraphe.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "27",
+          "question": "CSS est utilisé pour :",
+          "options": [
+            "Styliser les pages web",
+            "Créer des bases de données",
+            "Gérer un serveur",
+            "Compiler du code"
           ],
           "correctOption": 0
         }
@@ -256,15 +461,37 @@
     {
       "id": "8",
       "courseId": "4",
-      "title": "Quiz 2",
+      "title": "Web : CSS",
+      "duration": 8,
       "questions": [
         {
-          "id": "29",
-          "question": "Quel attribut change la couleur ?",
+          "id": "28",
+          "question": "La propriété CSS qui change la couleur du texte est :",
           "options": [
             "color",
-            "font",
-            "background"
+            "font-color",
+            "text-color",
+            "foreground"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "29",
+          "question": "Le modèle de boîte CSS inclut margin, border, padding et content.",
+          "options": [
+            "Vrai",
+            "Faux"
+          ],
+          "correctOption": 0
+        },
+        {
+          "id": "30",
+          "question": "Flexbox est utilisé pour :",
+          "options": [
+            "La mise en page flexible",
+            "Les animations",
+            "Les formulaires",
+            "Les requêtes HTTP"
           ],
           "correctOption": 0
         }
@@ -274,9 +501,10 @@
       "id": "9",
       "courseId": "5",
       "title": "Quiz 1",
+      "duration": 5,
       "questions": [
         {
-          "id": "33",
+          "id": "31",
           "question": "Quel système gère le matériel ?",
           "options": [
             "OS",
@@ -291,14 +519,15 @@
       "id": "10",
       "courseId": "5",
       "title": "Quiz 2",
+      "duration": 5,
       "questions": [
         {
-          "id": "37",
-          "question": "Multitâche permet ?",
+          "id": "32",
+          "question": "Un processus est :",
           "options": [
-            "Plusieurs programmes",
-            "Imprimer",
-            "Fichiers"
+            "Un programme en exécution",
+            "Un fichier",
+            "Un réseau"
           ],
           "correctOption": 0
         }
@@ -308,14 +537,14 @@
       "id": "11",
       "courseId": "6",
       "title": "Quiz 1",
+      "duration": 5,
       "questions": [
         {
-          "id": "41",
-          "question": "GRAFCET sert à ?",
+          "id": "33",
+          "question": "TCP/IP est un protocole réseau.",
           "options": [
-            "Séquences",
-            "Données",
-            "Interface"
+            "Vrai",
+            "Faux"
           ],
           "correctOption": 0
         }
@@ -325,14 +554,14 @@
       "id": "12",
       "courseId": "6",
       "title": "Quiz 2",
+      "duration": 5,
       "questions": [
         {
-          "id": "45",
-          "question": "Automate est pour ?",
+          "id": "34",
+          "question": "DNS traduit des noms de domaine en adresses IP.",
           "options": [
-            "Contrôler machines",
-            "Stocker",
-            "SQL"
+            "Vrai",
+            "Faux"
           ],
           "correctOption": 0
         }

@@ -1,232 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#000000"
-    tools:context=".vue.Inscription">
+    android:background="#FFFFFF">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline12"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="50dp" />
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="51dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mini_moodle"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginTop="48dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="173dp" />
+        <TextView
+            android:id="@+id/tvInscription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inscription"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="317dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prenom"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="475dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInscriptionPrenom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:autofillHints="name" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="539dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="255dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nom"
+            android:layout_marginTop="12dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="397dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInscriptionNom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:autofillHints="familyName" />
 
-    <EditText
-        android:id="@+id/etInscriptionPrenom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/prenom"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textColorHint="#546E7A"
-        app:layout_constraintBottom_toTopOf="@+id/guideline19"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="@+id/guideline15" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etInscriptionNom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/nom"
-        android:inputType="text"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline16"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="@+id/guideline19" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nom_d_utilisateur"
+            android:layout_marginTop="12dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/etInscriptionCourriel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/courriel"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textColorHint="#546E7A"
-        app:layout_constraintBottom_toTopOf="@+id/guideline20"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="@+id/guideline16" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInscriptionUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:autofillHints="username" />
 
-    <EditText
-        android:id="@+id/etInscriptionMotDePasse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/mot_de_passe"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textColorHint="#546E7A"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="@+id/guideline20" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etInscriptionNumeroTelephone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/numero_de_telephone"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textColorHint="#546E7A"
-        app:layout_constraintBottom_toTopOf="@+id/guideline18"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintHorizontal_bias="0.485"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="@+id/guideline17"
-        app:layout_constraintVertical_bias="0.326"
-        tools:ignore="TextFields" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/courriel"
+            android:layout_marginTop="12dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-    <Button
-        android:id="@+id/btnInscriptionInscrire"
-        android:layout_width="281dp"
-        android:layout_height="59dp"
-        android:layout_marginBottom="72dp"
-        android:backgroundTint="#000000"
-        android:text="@string/s_inscrire"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline17"
-        app:layout_constraintVertical_bias="0.783" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInscriptionCourriel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:autofillHints="emailAddress" />
 
-    <TextView
-        android:id="@+id/tvInscription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/inscription"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline31"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintHorizontal_bias="0.484"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/tvMiniMoodleInscription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/mini_moodle"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guideline31"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/mot_de_passe"
+            android:layout_marginTop="12dp"
+            app:endIconMode="password_toggle"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-    <TextView
-        android:id="@+id/tvDejaCompte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/vous_avez_deja_un_account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintHorizontal_bias="0.202"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline18"
-        app:layout_constraintVertical_bias="0.687" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInscriptionMotDePasse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:autofillHints="newPassword" />
 
-    <Button
-        android:id="@+id/btnInscriptionConnection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#000000"
-        android:text="@string/se_connecter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.814"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="@+id/guideline18"
-        app:layout_constraintVertical_bias="0.729" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etInscriptionUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/nom_d_utilisateur"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:textColorHint="#546E7A"
-        app:layout_constraintBottom_toTopOf="@+id/guideline15"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
-        app:layout_constraintTop_toTopOf="@+id/guideline31" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/numero_de_telephone"
+            android:layout_marginTop="12dp"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="107dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etInscriptionNumeroTelephone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:autofillHints="phoneNumber" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnInscriptionInscrire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/s_inscrire"
+            android:backgroundTint="#000000"
+            android:layout_marginTop="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/tvDejaCompte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/vous_avez_deja_un_account" />
+
+            <Button
+                android:id="@+id/btnInscriptionConnection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/se_connecter"
+                android:backgroundTint="#000000"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

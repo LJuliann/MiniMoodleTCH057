@@ -20,14 +20,17 @@ public class DetailCoursViewModel extends ViewModel {
     private final MutableLiveData<List<Assignments>> travaux = new MutableLiveData<>();
     private final MutableLiveData<List<Quizzes>> quizzes = new MutableLiveData<>();
     private final MutableLiveData<String> message = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> chargement = new MutableLiveData<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public LiveData<Courses> getCours() { return cours; }
     public LiveData<List<Assignments>> getTravaux() { return travaux; }
     public LiveData<List<Quizzes>> getQuizzes() { return quizzes; }
     public LiveData<String> getMessage() { return message; }
+    public LiveData<Boolean> getChargement() { return chargement; }
 
     public void charger(String courseId) {
+        chargement.postValue(true);
         executorService.execute(() -> {
             try {
                 HttpJsonService service = new HttpJsonService();
@@ -36,6 +39,8 @@ public class DetailCoursViewModel extends ViewModel {
                 quizzes.postValue(service.getQuizzesByCourseId(courseId));
             } catch (IOException e) {
                 message.postValue("Erreur de chargement du cours");
+            } finally {
+                chargement.postValue(false);
             }
         });
     }

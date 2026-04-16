@@ -18,6 +18,7 @@ public class CoursesViewModel extends ViewModel {
 
     private final MutableLiveData<List<Courses>> coursesFiltrees = new MutableLiveData<>();
     private final MutableLiveData<String> message = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> chargement = new MutableLiveData<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private List<Courses> tousLesCours = new ArrayList<>();
     private int filtreSpinner = 0;
@@ -31,7 +32,12 @@ public class CoursesViewModel extends ViewModel {
         return message;
     }
 
+    public LiveData<Boolean> getChargement() {
+        return chargement;
+    }
+
     public void chargerCourses(List<String> enrolledIds) {
+        chargement.postValue(true);
         executorService.execute(() -> {
             try {
                 List<Courses> tous = CoursesDao.getCourses();
@@ -45,6 +51,8 @@ public class CoursesViewModel extends ViewModel {
                 appliquerFiltres();
             } catch (IOException e) {
                 message.postValue("Erreur de chargement des cours");
+            } finally {
+                chargement.postValue(false);
             }
         });
     }

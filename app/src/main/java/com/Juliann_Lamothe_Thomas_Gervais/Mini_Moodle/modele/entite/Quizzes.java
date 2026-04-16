@@ -7,6 +7,7 @@ import java.util.List;
 public class Quizzes {
 
     private String id, courseId, title;
+    private int duration;
     private List<Questions> questions;
 
     public String getId() { return id; }
@@ -17,6 +18,9 @@ public class Quizzes {
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
+
+    public int getDuration() { return duration; }
+    public void setDuration(int duration) { this.duration = duration; }
 
     public List<Questions> getQuestions() { return questions; }
     public void setQuestions(List<Questions> questions) { this.questions = questions; }

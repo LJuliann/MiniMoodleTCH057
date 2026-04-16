@@ -1,7 +1,9 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class DetailCours extends AppCompatActivity {
     TextView tvDetailNomCours;
     TabLayout tlDetail;
     ViewPager2 vpDetail;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class DetailCours extends AppCompatActivity {
         tvDetailNomCours = findViewById(R.id.tvDetailNomCours);
         tlDetail = findViewById(R.id.tlDetail);
         vpDetail = findViewById(R.id.vpDetail);
+        progressBar = findViewById(R.id.progressBarDetail);
 
         vpDetail.setAdapter(new DetailCoursAdapter(this));
 
@@ -55,6 +59,11 @@ public class DetailCours extends AppCompatActivity {
         DetailCoursViewModel viewModel = new ViewModelProvider(this).get(DetailCoursViewModel.class);
         viewModel.getCours().observe(this, cours -> tvDetailNomCours.setText(cours.getTitle()));
         viewModel.getMessage().observe(this, msg -> Toast.makeText(this, msg, Toast.LENGTH_SHORT).show());
+        viewModel.getChargement().observe(this, enCours -> {
+            progressBar.setVisibility(enCours ? View.VISIBLE : View.GONE);
+            tlDetail.setVisibility(enCours ? View.GONE : View.VISIBLE);
+            vpDetail.setVisibility(enCours ? View.GONE : View.VISIBLE);
+        });
         viewModel.charger(id);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

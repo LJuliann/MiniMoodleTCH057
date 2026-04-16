@@ -1,11 +1,16 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -84,7 +89,7 @@ public class TableauDeBord extends AppCompatActivity {
                 ajouterItem(llTravaux, "Aucun travail à remettre.");
             } else {
                 for (Assignments a : assignments) {
-                    ajouterItem(llTravaux, a.getTitle() + "  —  " + a.getDueDate());
+                    ajouterTravailCliquable(a);
                 }
             }
         });
@@ -119,5 +124,46 @@ public class TableauDeBord extends AppCompatActivity {
         tv.setTextSize(14);
         tv.setPadding(0, 6, 0, 6);
         parent.addView(tv);
+    }
+
+    private void ajouterTravailCliquable(Assignments a) {
+        String statut = calculerStatutSimple(a);
+
+        TextView tv = new TextView(this);
+        tv.setText("• " + a.getTitle() + "  —  " + a.getDueDate());
+        tv.setTextSize(14);
+        tv.setPadding(0, 6, 0, 6);
+        tv.setTextColor(couleurStatut(statut));
+        tv.setOnClickListener(v -> {
+            Intent intent = new Intent(this, DetailTravail.class);
+            intent.putExtra("assignmentId", a.getId());
+            intent.putExtra("title", a.getTitle());
+            intent.putExtra("description", a.getDescription());
+            intent.putExtra("dueDate", a.getDueDate());
+            intent.putExtra("instructions", a.getInstructions());
+            intent.putExtra("totalPoints", a.getTotalPoints());
+            intent.putExtra("statut", statut);
+            intent.putExtra("grade", a.getGrade() != null ? a.getGrade() : -1);
+            intent.putExtra("comment", a.getComment() != null ? a.getComment() : "");
+            startActivity(intent);
+        });
+        llTravaux.addView(tv);
+    }
+
+    private String calculerStatutSimple(Assignments a) {
+        if (a.getGrade() != null && a.getGrade() >= 0) return "Corrigé";
+        try {
+            Date dateLimite = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(a.getDueDate());
+            if (dateLimite != null && dateLimite.before(new Date())) return "En retard";
+        } catch (Exception ignored) {}
+        return "À faire";
+    }
+
+    private int couleurStatut(String statut) {
+        switch (statut) {
+            case "Corrigé":   return Color.parseColor("#E65100");
+            case "En retard": return Color.parseColor("#C62828");
+            default:          return Color.parseColor("#546E7A");
+        }
     }
 }

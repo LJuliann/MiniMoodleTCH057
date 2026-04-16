@@ -15,6 +15,15 @@
         android:theme="@style/Theme.MiniMoodle"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".vue.DetailTravail"
+            android:exported="false" />
+        <activity
+            android:name=".vue.DetailQuizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".vue.ResultatQuizActivity"
+            android:exported="false" />
+        <activity
             android:name=".vue.TableauDeBord"
             android:exported="false" />
         <activity

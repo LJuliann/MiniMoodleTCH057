@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.adapteur.TravauxAdapter;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.DetailCoursViewModel;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.TravauxViewModel;
 
 public class TravauxFragment extends Fragment {
 
@@ -32,9 +33,15 @@ public class TravauxFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
 
-        DetailCoursViewModel viewModel = new ViewModelProvider(requireActivity()).get(DetailCoursViewModel.class);
-        viewModel.getTravaux().observe(getViewLifecycleOwner(), travaux -> {
-            recyclerView.setAdapter(new TravauxAdapter(travaux));
-        });
+        TravauxViewModel traVauxViewModel = new ViewModelProvider(requireActivity()).get(TravauxViewModel.class);
+        DetailCoursViewModel detailCoursViewModel = new ViewModelProvider(requireActivity()).get(DetailCoursViewModel.class);
+
+        traVauxViewModel.getTravaux().observe(getViewLifecycleOwner(), travaux ->
+                recyclerView.setAdapter(new TravauxAdapter(travaux))
+        );
+
+        detailCoursViewModel.getTravaux().observe(getViewLifecycleOwner(), travaux ->
+                traVauxViewModel.chargerAvecStatuts(travaux)
+        );
     }
 }

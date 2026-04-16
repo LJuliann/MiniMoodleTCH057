@@ -3,10 +3,12 @@ package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class ListeDesCours extends AppCompatActivity {
     Spinner spinner;
     EditText editTextRecherche;
     CoursesAdapter adapter;
+    ProgressBar progressBar;
 
 
     @Override
@@ -62,12 +65,19 @@ public class ListeDesCours extends AppCompatActivity {
 
         coursesViewModel = new ViewModelProvider(this).get(CoursesViewModel.class);
 
+        progressBar = findViewById(R.id.progressBarListe);
+
         coursesViewModel.getCourses().observe(this, courses -> {
             adapter.updateList(courses);
         });
 
         coursesViewModel.getMessage().observe(this, msg -> {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        });
+
+        coursesViewModel.getChargement().observe(this, enCours -> {
+            progressBar.setVisibility(enCours ? View.VISIBLE : View.GONE);
+            recyclerView.setVisibility(enCours ? View.GONE : View.VISIBLE);
         });
 
         editTextRecherche = findViewById(R.id.editTextText);

@@ -6,7 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Assignments {
 
     private String id, courseId, title, description, dueDate, status, type;
+    private String instructions, comment;
+    private Integer grade;
     private int totalPoints;
+    private transient String statutCalcule; // calculé localement, ignoré par Jackson
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -29,6 +32,18 @@ public class Assignments {
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
 
+    public String getInstructions() { return instructions; }
+    public void setInstructions(String instructions) { this.instructions = instructions; }
+
+    public String getComment() { return comment; }
+    public void setComment(String comment) { this.comment = comment; }
+
+    public Integer getGrade() { return grade; }
+    public void setGrade(Integer grade) { this.grade = grade; }
+
     public int getTotalPoints() { return totalPoints; }
     public void setTotalPoints(int totalPoints) { this.totalPoints = totalPoints; }
+
+    public String getStatutCalcule() { return statutCalcule; }
+    public void setStatutCalcule(String statutCalcule) { this.statutCalcule = statutCalcule; }
 }
