@@ -67,7 +67,7 @@
       "description": "Ce cours vise à initier l’étudiante ou l’étudiant au rôle des différentes composantes matérielles d’un ordinateur.",
       "teacher": "Lazhar Khelifi",
       "session": "Hiver 2026",
-      "imageUrl": "https://example.com/arch.png",
+      "imageUrl": "https://picsum.photos/seed/arch/600/200",
       "annonces": [
         "L'examen intra aura lieu le 15 mars en salle A-1234."
       ]
@@ -79,7 +79,7 @@
       "description": "Au terme de ce cours, l'étudiante ou l’étudiant sera en mesure de décrire les principales composantes d’un SGBD.",
       "teacher": " Marie Tremblay",
       "session": "Hiver 2026",
-      "imageUrl": "https://example.com/db.png",
+      "imageUrl": "https://picsum.photos/seed/database/600/200",
       "annonces": [
         "Le nouveau TP sur la modélisation est disponible sur Moodle."
       ]
@@ -91,7 +91,7 @@
       "description": "Développement d’applications mobiles.",
       "teacher": "Pierre Durand",
       "session": "Hiver 2026",
-      "imageUrl": "https://example.com/mobile.png",
+      "imageUrl": "https://picsum.photos/seed/mobile/600/200",
       "annonces": [
         "Installation d'Android Studio requise."
       ]
@@ -103,7 +103,7 @@
       "description": "Rudiments de la programmation Web.",
       "teacher": "Sophie Roy",
       "session": "Hiver 2026",
-      "imageUrl": "https://example.com/web.png",
+      "imageUrl": "https://picsum.photos/seed/webdev/600/200",
       "annonces": [
         "Quiz HTML/CSS vendredi."
       ]
@@ -115,7 +115,7 @@
       "description": "Fonctionnement système et services Internet.",
       "teacher": "Luc Lefebvre",
       "session": "Automne 2025",
-      "imageUrl": "https://example.com/os.png",
+      "imageUrl": "https://picsum.photos/seed/system/600/200",
       "annonces": [
         "Mise à jour des serveurs terminée."
       ]
@@ -127,7 +127,7 @@
       "description": "Programmation GRAFCET et séquences.",
       "teacher": "Julie Gagnon",
       "session": "Automne 2025",
-      "imageUrl": "https://example.com/plc.png",
+      "imageUrl": "https://picsum.photos/seed/automate/600/200",
       "annonces": [
         "Séance de labo mardi soir."
       ]

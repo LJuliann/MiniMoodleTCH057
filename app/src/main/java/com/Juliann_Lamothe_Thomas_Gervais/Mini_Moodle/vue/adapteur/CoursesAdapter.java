@@ -12,8 +12,10 @@ import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.DetailCours;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHolder> {
     private List<Courses> listeCours;
@@ -42,6 +44,16 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         holder.tvSession.setText(cours.getSession());
         holder.coursId = cours.getId();
 
+        String imageUrl = cours.getImageUrl();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                 .load(imageUrl)
+                 .centerCrop()
+                 .into(holder.ivBanniere);
+        } else {
+            holder.ivBanniere.setImageDrawable(null);
+            holder.ivBanniere.setBackgroundColor(0xFF1A237E);
+        }
     }
 
     @Override
@@ -53,15 +65,16 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         TextView tvNomCours;
         TextView tvNomProf;
         TextView tvSession;
+        ImageView ivBanniere;
         String coursId = "";
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-
             tvNomCours = itemView.findViewById(R.id.tvRecyclerNomCours);
-            tvNomProf = itemView.findViewById(R.id.tvRecyclerViewNomProf);
-            tvSession = itemView.findViewById(R.id.tvRecyclerViewSession);
+            tvNomProf  = itemView.findViewById(R.id.tvRecyclerViewNomProf);
+            tvSession  = itemView.findViewById(R.id.tvRecyclerViewSession);
+            ivBanniere = itemView.findViewById(R.id.ivCoursBanniere);
 
             itemView.setOnClickListener(this);
         }

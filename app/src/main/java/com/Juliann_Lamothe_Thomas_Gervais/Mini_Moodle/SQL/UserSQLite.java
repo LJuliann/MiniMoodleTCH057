@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
 public class UserSQLite {
 
     public static final String DB_NAME = "Mini_Moodle.db";
-    public static final int DB_VERSION = 3;
+    public static final int DB_VERSION = 4;
     public static final String TABLE_NAME = "Users";
 
     public class Colonnes{

@@ -20,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.DbUtil;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.SessionDao;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.UsersViewModel;
@@ -82,6 +83,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     SessionDao.supprimerSession(this);
                 }
                 Users user = usersViewModel.getConnectedUser().getValue();
+
+                // Persister le profil localement pour l'écran Profil utilisateur
+                if (user != null) {
+                    DbUtil db = new DbUtil(this);
+                    db.sauvegarderProfil(
+                            user.getPrenom(), user.getNom(), user.getEmail(),
+                            user.getTelephone(), user.getPhotoUrl(), user.getPassword());
+                    db.close();
+                }
+
                 intent = new Intent(this, TableauDeBord.class);
                 if (user != null && user.getEnrolledCourseIds() != null) {
                     intent.putStringArrayListExtra("enrolledCourseIds", new ArrayList<>(user.getEnrolledCourseIds()));
