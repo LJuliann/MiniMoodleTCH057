@@ -82,9 +82,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     SessionDao.supprimerSession(this);
                 }
                 Users user = usersViewModel.getConnectedUser().getValue();
-                intent = new Intent(this, ListeDesCours.class);
+                intent = new Intent(this, TableauDeBord.class);
                 if (user != null && user.getEnrolledCourseIds() != null) {
                     intent.putStringArrayListExtra("enrolledCourseIds", new ArrayList<>(user.getEnrolledCourseIds()));
+                }
+                if (user != null && user.getPrenom() != null) {
+                    intent.putExtra("prenom", user.getPrenom());
                 }
                 activityResultLauncher.launch(intent);
             }

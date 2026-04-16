@@ -27,7 +27,8 @@ import okhttp3.ResponseBody;
 
 public class HttpJsonService {
 
-    private static String URL_POINT_ENTRER = "http://10.0.2.2:3000";
+    //private static String URL_POINT_ENTRER = "http://10.0.2.2:3000";
+    private static String URL_POINT_ENTRER = "http://10.0.0.251:3000";
 
 
     //Recuperation des users
@@ -128,6 +129,34 @@ public class HttpJsonService {
         Request request = new Request.Builder().url(url).get().build();
         String body = okHttpClient.newCall(request).execute().body().string();
         return Arrays.asList(new ObjectMapper().readValue(body, Quizzes[].class));
+    }
+
+    public List<Assignments> getAssignments() throws IOException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTRER + "/assignments")
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+        String jsonStr = response.body().string();
+        try {
+            return Arrays.asList(new ObjectMapper().readValue(jsonStr, Assignments[].class));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Quizzes> getQuizzes() throws IOException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTRER + "/quizzes")
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+        String jsonStr = response.body().string();
+        try {
+            return Arrays.asList(new ObjectMapper().readValue(jsonStr, Quizzes[].class));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Users connexion(String courriel, String password) throws IOException {

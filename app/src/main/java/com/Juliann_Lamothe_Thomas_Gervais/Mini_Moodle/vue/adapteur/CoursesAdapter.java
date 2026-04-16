@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.DetailCours;
-import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.ListeDesCours;
 
 import android.widget.TextView;
 
@@ -31,7 +30,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
     @NonNull
     @Override
     public CoursesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row_liste_cours, parent, false);
         return new CoursesAdapter.ViewHolder(view);
     }
 
@@ -40,6 +39,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         Courses cours = listeCours.get(position);
         holder.tvNomCours.setText(cours.getTitle());
         holder.tvNomProf.setText(cours.getTeacher());
+        holder.tvSession.setText(cours.getSession());
         holder.coursId = cours.getId();
 
     }
@@ -52,6 +52,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvNomCours;
         TextView tvNomProf;
+        TextView tvSession;
         String coursId = "";
 
         public ViewHolder(View itemView) {
@@ -60,6 +61,8 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
 
             tvNomCours = itemView.findViewById(R.id.tvRecyclerNomCours);
             tvNomProf = itemView.findViewById(R.id.tvRecyclerViewNomProf);
+            tvSession = itemView.findViewById(R.id.tvRecyclerViewSession);
+
             itemView.setOnClickListener(this);
         }
 
