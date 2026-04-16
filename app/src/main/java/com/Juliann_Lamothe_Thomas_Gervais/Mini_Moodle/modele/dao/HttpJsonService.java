@@ -27,8 +27,8 @@ import okhttp3.ResponseBody;
 
 public class HttpJsonService {
 
-    //private static String URL_POINT_ENTRER = "http://10.0.2.2:3000";
-    private static String URL_POINT_ENTRER = "http://10.0.0.251:3000";
+    private static String URL_POINT_ENTRER = "http://10.0.2.2:3000";
+   // private static String URL_POINT_ENTRER = "http://10.0.0.251:3000";
 
 
     //Recuperation des users
