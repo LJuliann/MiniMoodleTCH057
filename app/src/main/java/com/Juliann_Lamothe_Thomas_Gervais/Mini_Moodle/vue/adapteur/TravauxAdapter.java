@@ -13,22 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Assignments;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.TravailAvecCours;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.DetailTravail;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class TravauxAdapter extends RecyclerView.Adapter<TravauxAdapter.ViewHolder> {
 
-    private List<Assignments> listeTravaux;
+    private List<TravailAvecCours> listeTravaux;
 
-    public TravauxAdapter(List<Assignments> listeTravaux) {
+    public TravauxAdapter(List<TravailAvecCours> listeTravaux) {
         this.listeTravaux = listeTravaux;
     }
 
-    public void updateList(List<Assignments> nouvelle) {
+    public void updateList(List<TravailAvecCours> nouvelle) {
         this.listeTravaux = nouvelle;
         notifyDataSetChanged();
     }
@@ -43,11 +41,18 @@ public class TravauxAdapter extends RecyclerView.Adapter<TravauxAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Assignments travail = listeTravaux.get(position);
+        TravailAvecCours item = listeTravaux.get(position);
+        Assignments travail = item.travail;
+
+        String label = item.codeCours != null && !item.codeCours.isEmpty()
+                ? item.codeCours
+                : item.nomCours;
+        holder.tvNomCours.setText(label);
+
         holder.tvTitre.setText(travail.getTitle());
         holder.tvEcheance.setText("Échéance : " + travail.getDueDate());
 
-        String statut = calculerStatut(travail);
+        String statut = travail.getStatutCalcule() != null ? travail.getStatutCalcule() : "À faire";
         holder.tvStatut.setText(statut);
         holder.tvStatut.setTextColor(couleurStatut(statut));
 
@@ -70,15 +75,6 @@ public class TravauxAdapter extends RecyclerView.Adapter<TravauxAdapter.ViewHold
     @Override
     public int getItemCount() { return listeTravaux.size(); }
 
-    private String calculerStatut(Assignments a) {
-        if (a.getGrade() != null && a.getGrade() >= 0) return "Corrigé";
-        try {
-            Date limite = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(a.getDueDate());
-            if (limite != null && limite.before(new Date())) return "En retard";
-        } catch (Exception ignored) {}
-        return "À faire";
-    }
-
     private int couleurStatut(String statut) {
         switch (statut) {
             case "Corrigé":   return Color.parseColor("#E65100");
@@ -88,10 +84,11 @@ public class TravauxAdapter extends RecyclerView.Adapter<TravauxAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitre, tvEcheance, tvStatut;
+        TextView tvNomCours, tvTitre, tvEcheance, tvStatut;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvNomCours = itemView.findViewById(R.id.tvNomCours);
             tvTitre    = itemView.findViewById(R.id.tvTitreTravail);
             tvEcheance = itemView.findViewById(R.id.tvEcheance);
             tvStatut   = itemView.findViewById(R.id.tvStatut);

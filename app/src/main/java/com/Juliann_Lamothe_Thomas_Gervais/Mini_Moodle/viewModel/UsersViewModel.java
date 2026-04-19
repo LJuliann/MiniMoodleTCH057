@@ -1,42 +1,36 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.DbUtil;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.dao.UsersDao;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
 
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class UsersViewModel extends ViewModel {
+public class UsersViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<List<Users>> users = new MutableLiveData<>();
     private final MutableLiveData<String> message = new MutableLiveData<>();
     private final MutableLiveData<Boolean> success = new MutableLiveData<>();
     private final MutableLiveData<Users> connectedUser = new MutableLiveData<>();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public LiveData<List<Users>> getUsers() {
-        return users;
+    public UsersViewModel(@NonNull Application application) {
+        super(application);
     }
 
-    public LiveData<String> getMessage() {
-        return message;
-    }
-
-    public LiveData<Boolean> getSuccess() {
-        return success;
-    }
-
-    public LiveData<Users> getConnectedUser() {
-        return connectedUser;
-    }
+    public LiveData<String> getMessage() { return message; }
+    public LiveData<Boolean> getSuccess() { return success; }
+    public LiveData<Users> getConnectedUser() { return connectedUser; }
 
     public void connexion(String courriel, String password) {
         if (courriel.isEmpty() || password.isEmpty()) {
@@ -47,6 +41,7 @@ public class UsersViewModel extends ViewModel {
             try {
                 Users user = UsersDao.connexion(courriel, password);
                 if (user != null) {
+                    sauvegarderProfilLocal(user);
                     connectedUser.postValue(user);
                     message.postValue("Connexion réussie");
                     success.postValue(true);
@@ -68,9 +63,11 @@ public class UsersViewModel extends ViewModel {
         }
 
         executorService.execute(() -> {
-            try{
+            try {
                 boolean reussite = UsersDao.enregistrerUser(user);
-                if (reussite){
+                if (reussite) {
+                    sauvegarderProfilLocal(user);
+                    connectedUser.postValue(user);
                     message.postValue("Inscription réussie");
                     success.postValue(true);
                 } else {
@@ -81,8 +78,13 @@ public class UsersViewModel extends ViewModel {
                 throw new RuntimeException(e);
             }
         });
-
     }
 
-
+    private void sauvegarderProfilLocal(Users user) {
+        DbUtil db = new DbUtil(getApplication());
+        db.sauvegarderProfil(
+                user.getPrenom(), user.getNom(), user.getEmail(),
+                user.getTelephone(), user.getPhotoUrl(), user.getPassword());
+        db.close();
+    }
 }

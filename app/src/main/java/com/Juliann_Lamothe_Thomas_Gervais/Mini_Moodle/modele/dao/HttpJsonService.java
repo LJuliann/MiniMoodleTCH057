@@ -1,7 +1,5 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.dao;
 
-import android.util.Log;
-
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Assignments;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Quizzes;
@@ -29,32 +27,6 @@ public class HttpJsonService {
 
     //private static String URL_POINT_ENTRER = "http://10.0.2.2:3000";
     private static String URL_POINT_ENTRER = "http://10.0.0.251:3000";
-
-
-    //Recuperation des users
-    public List<Users> getUsers() throws IOException, JSONException {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(URL_POINT_ENTRER)
-                .build();
-        Response response = okHttpClient.newCall(request).execute();
-        ResponseBody responseBody = response.body();
-        String jsonStr = responseBody.string();
-        List<Users> users = null;
-
-        Log.d("HttpJsonService",jsonStr);
-
-        if(jsonStr.length() > 0){
-            ObjectMapper mapper = new ObjectMapper();
-            try{
-                users = Arrays.asList(mapper.readValue(jsonStr, Users[].class));
-            }catch (JsonProcessingException e){
-                throw new RuntimeException(e);
-            }
-            return users;
-        }
-        return null;
-    }
 
 
     //Recupere la liste des cours

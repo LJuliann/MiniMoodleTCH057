@@ -12,10 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -29,6 +25,7 @@ import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.ListeAnnoncesActivity;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.ListeTravauxActivity;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.ListeQuizActivity;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Assignments;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.TravailAvecCours;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Quizzes;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.TableauDeBordViewModel;
@@ -127,8 +124,8 @@ public class TableauDeBord extends AppCompatActivity {
             if (assignments.isEmpty()) {
                 ajouterItem(llTravaux, "Aucun travail à remettre.");
             } else {
-                for (Assignments a : assignments) {
-                    ajouterTravailCliquable(a);
+                for (TravailAvecCours t : assignments) {
+                    ajouterTravailCliquable(t);
                 }
             }
         });
@@ -255,8 +252,9 @@ public class TableauDeBord extends AppCompatActivity {
         parent.addView(tv);
     }
 
-    private void ajouterTravailCliquable(Assignments a) {
-        String statut = calculerStatutSimple(a);
+    private void ajouterTravailCliquable(TravailAvecCours item) {
+        Assignments a = item.travail;
+        String statut = a.getStatutCalcule() != null ? a.getStatutCalcule() : "À faire";
         int couleur = couleurStatut(statut);
 
         LinearLayout row = creerLigneCliquable();
@@ -264,6 +262,16 @@ public class TableauDeBord extends AppCompatActivity {
         LinearLayout left = new LinearLayout(this);
         left.setOrientation(LinearLayout.VERTICAL);
         left.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+
+        if (item.codeCours != null && !item.codeCours.isEmpty()) {
+            TextView tvCode = new TextView(this);
+            tvCode.setText(item.codeCours);
+            tvCode.setTextSize(11);
+            tvCode.setTypeface(null, android.graphics.Typeface.BOLD);
+            tvCode.setTextColor(Color.parseColor("#1A237E"));
+            tvCode.setLetterSpacing(0.05f);
+            left.addView(tvCode);
+        }
 
         TextView tvTitre = new TextView(this);
         tvTitre.setText(a.getTitle());
@@ -367,15 +375,6 @@ public class TableauDeBord extends AppCompatActivity {
         int px8 = (int) (8 * getResources().getDisplayMetrics().density);
         tv.setPadding(px8, 0, 0, 0);
         return tv;
-    }
-
-    private String calculerStatutSimple(Assignments a) {
-        if (a.getGrade() != null && a.getGrade() >= 0) return "Corrigé";
-        try {
-            Date dateLimite = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(a.getDueDate());
-            if (dateLimite != null && dateLimite.before(new Date())) return "En retard";
-        } catch (Exception ignored) {}
-        return "À faire";
     }
 
     private int couleurStatut(String statut) {

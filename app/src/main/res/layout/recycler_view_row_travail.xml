@@ -22,6 +22,16 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvNomCours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="#1A237E"
+                android:letterSpacing="0.05"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
                 android:id="@+id/tvTitreTravail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,0 +1,126 @@
+Rapport de projet — Mini Moodle
+TCH057 — Applications mobiles et expérience usager
+====================================================
+
+
+Description de l'application
+------------------------------
+
+L'application Mini Moodle est une application mobile destinée aux étudiants de l'ÉTS afin de
+rassembler en un seul endroit les informations académiques dont ils ont besoin : la liste de leurs
+cours, les annonces des enseignants, les travaux à remettre, les quiz ainsi que la gestion de leur
+profil. L'objectif est d'offrir une expérience fluide et centralisée, sans que l'étudiant ait à
+naviguer entre plusieurs plateformes.
+
+
+Principaux choix de conception
+--------------------------------
+
+Architecture
+~~~~~~~~~~~~
+
+L'architecture retenue est le patron MVVM (Model-View-ViewModel). Ce choix s'explique d'abord
+par le fait qu'il s'agit du modèle architectural le plus largement adopté en industrie, ce qui en
+fait une opportunité idéale pour se familiariser avec ces concepts dans un contexte
+d'apprentissage. De plus, ce patron présente plusieurs avantages concrets pour un projet de notre
+envergure. La séparation claire entre l'interface utilisateur (UI) et la logique métier permet
+d'éviter la surcharge des classes Activity, un problème qui tend à apparaître avec le patron MVC.
+Contrairement au patron MVP, le MVVM ne crée pas de lien direct entre les activités et un
+présentateur, ce qui réduit le risque de couplage fort entre composants.
+
+Organisation du code
+~~~~~~~~~~~~~~~~~~~~
+
+La structure du projet suit la division en packages vue en classe, organisée selon les trois
+couches de l'architecture MVVM :
+
+  - modele : divisé en deux sous-packages : "entite", qui regroupe les classes de données
+    (Users, Courses, Assignments, Quizzes, etc.) mappées depuis le serveur JSON, et "dao",
+    responsable des communications HTTP avec le serveur via OkHttp et de la désérialisation
+    JSON avec Jackson.
+
+  - vue : regroupe toutes les Activity et Fragments de l'application. Un sous-package
+    "adapteur" contient les RecyclerView Adapters, et un sous-package "Fragment" contient
+    les fragments des onglets du détail de cours.
+
+  - viewModel : assure le lien entre la vue et le modèle via des LiveData observés par les
+    Activity. Chaque écran principal possède son propre ViewModel.
+
+  - SQL : contient les classes de contrat SQLite (UserSQLite, ProfilSQLite, SoumissionSQLite,
+    ResultatQuizSQLite) et la classe utilitaire DbUtil (SQLiteOpenHelper) qui gère les
+    opérations locales.
+
+Navigation entre les écrans
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La navigation est conçue pour minimiser le nombre de clics. Le Tableau de bord est le hub
+central depuis lequel l'étudiant peut accéder directement aux travaux, aux quiz et aux détails
+d'un cours via les annonces, sans passer par la liste des cours. Le parcours principal est le
+suivant :
+
+  - Connexion → Tableau de bord (hub central)
+  - Tableau de bord → Travail (accès direct en un clic)
+  - Tableau de bord → Quiz (accès direct en un clic)
+  - Tableau de bord → Détail du cours (via une annonce)
+  - Tableau de bord → Liste des cours (bouton "Voir mes cours")
+  - Liste des cours → Détail du cours (4 onglets : Description, Annonces, Travaux, Quiz)
+  - Détail du cours → Détail du travail / Quiz
+  - Quiz → Résultat du quiz
+  - Tableau de bord → Profil utilisateur
+
+Conception de l'interface et principes ergonomiques
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+L'interface utilise le système de design Material 3 d'Android (CardView, TextInputLayout
+OutlinedBox, Material Buttons) avec une palette de couleurs cohérente (bleu #1A237E, blanc,
+accents orange/vert/rouge pour les statuts). Plusieurs principes de Bastien & Scapin et de
+Nielsen ont été appliqués :
+
+  - Visibilité de l'état système (Nielsen) / Guidage (B&S) : une ProgressBar apparaît pendant
+    le chargement des données depuis le serveur.
+
+  - Contrôle explicite et gestion des erreurs (B&S) : un dialogue de confirmation (AlertDialog)
+    est affiché avant toute soumission de travail, action irréversible.
+
+  - Affordances visuelles (Guidage B&S / Reconnaissance Nielsen) : les éléments cliquables
+    affichent un chevron "›" et un effet ripple pour signaler leur interactivité.
+
+  - Homogénéité (B&S) : les statuts des travaux (À faire, Remis, En retard, Corrigé) sont
+    systématiquement représentés par les mêmes couleurs dans toute l'application.
+
+  - Charge mentale (B&S) / Esthétique minimaliste (Nielsen) : le Tableau de bord présente les
+    informations les plus urgentes en premier (annonces, travaux, quiz) avec un accès direct,
+    sans navigation superflue.
+
+
+État du projet
+---------------
+
+Le projet est entièrement fonctionnel. L'ensemble des fonctionnalités décrites dans l'énoncé
+ont été implémentées :
+
+  - Connexion et inscription avec validation contre le serveur JSON
+  - Tableau de bord avec vue synthèse (stats, travaux, quiz, annonces)
+  - Liste des cours avec recherche par nom/code et filtrage par session
+  - Détail d'un cours en 4 onglets navigables
+  - Gestion des travaux avec les 4 statuts et soumission simulée (texte libre)
+  - Quiz complet avec questions une par une (QCM et vrai/faux), calcul du score et
+    sauvegarde SQLite
+  - Profil utilisateur modifiable avec chargement de photo par URL (Glide)
+  - Persistance locale via SQLite (soumissions, résultats de quiz, profil,
+    session "se souvenir de moi")
+
+
+Informations sur l'environnement de développement
+---------------------------------------------------
+
+  Langage                         : Java 11
+  Android SDK (compileSdk)        : API 36
+  Android SDK minimum (minSdk)    : API 24 (Android 7.0)
+  Android SDK cible (targetSdk)   : API 36
+  Gradle                          : 9.3.1
+  Jackson Databind                : 2.16.1
+  OkHttp                          : 4.12.0
+  Glide                           : 4.16.0
+  IDE                             : Android Studio
+  Serveur de données              : JSON Server (Node.js)

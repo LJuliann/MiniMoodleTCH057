@@ -37,6 +37,15 @@
                 android:textColor="#546E7A"
                 android:layout_marginTop="2dp" />
 
+            <TextView
+                android:id="@+id/tvStatutQuiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp"
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <TextView

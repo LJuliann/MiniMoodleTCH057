@@ -61,42 +61,7 @@ public class DbUtil extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
-            db.execSQL(String.format(
-                    "CREATE TABLE IF NOT EXISTS %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT UNIQUE, %s TEXT, %s TEXT)",
-                    SoumissionSQLite.TABLE_NAME,
-                    SoumissionSQLite.Colonnes.ID,
-                    SoumissionSQLite.Colonnes.ASSIGNMENT_ID,
-                    SoumissionSQLite.Colonnes.CONTENU,
-                    SoumissionSQLite.Colonnes.DATE_REMISE
-            ));
-        }
-        if (oldVersion < 3) {
-            db.execSQL(String.format(
-                    "CREATE TABLE IF NOT EXISTS %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT UNIQUE, %s INTEGER, %s INTEGER, %s TEXT)",
-                    ResultatQuizSQLite.TABLE_NAME,
-                    ResultatQuizSQLite.Colonnes.ID,
-                    ResultatQuizSQLite.Colonnes.QUIZ_ID,
-                    ResultatQuizSQLite.Colonnes.SCORE,
-                    ResultatQuizSQLite.Colonnes.TOTAL,
-                    ResultatQuizSQLite.Colonnes.DATE_COMPLETION
-            ));
-        }
-        if (oldVersion < 4) {
-            db.execSQL(String.format(
-                    "CREATE TABLE IF NOT EXISTS %s (%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT)",
-                    ProfilSQLite.TABLE_NAME,
-                    ProfilSQLite.Colonnes.ID,
-                    ProfilSQLite.Colonnes.PRENOM,
-                    ProfilSQLite.Colonnes.NOM,
-                    ProfilSQLite.Colonnes.EMAIL,
-                    ProfilSQLite.Colonnes.TELEPHONE,
-                    ProfilSQLite.Colonnes.PHOTO_URL,
-                    ProfilSQLite.Colonnes.PASSWORD
-            ));
-        }
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
     // ── Connexion ──────────────────────────────────────────────────────────
 

@@ -9,21 +9,25 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.DbUtil;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.dao.HttpJsonService;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Soumission;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Assignments;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Quizzes;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.TravailAvecCours;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class TableauDeBordViewModel extends AndroidViewModel {
 
     private final MutableLiveData<List<Courses>> courses = new MutableLiveData<>();
-    private final MutableLiveData<List<Assignments>> assignments = new MutableLiveData<>();
+    private final MutableLiveData<List<TravailAvecCours>> assignments = new MutableLiveData<>();
     private final MutableLiveData<List<Quizzes>> quizzes = new MutableLiveData<>();
     private final MutableLiveData<String> message = new MutableLiveData<>();
     private final MutableLiveData<String> prenom = new MutableLiveData<>();
@@ -34,7 +38,7 @@ public class TableauDeBordViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Courses>> getCourses() { return courses; }
-    public LiveData<List<Assignments>> getAssignments() { return assignments; }
+    public LiveData<List<TravailAvecCours>> getAssignments() { return assignments; }
     public LiveData<List<Quizzes>> getQuizzes() { return quizzes; }
     public LiveData<String> getMessage() { return message; }
     public LiveData<String> getPrenom() { return prenom; }
@@ -60,10 +64,22 @@ public class TableauDeBordViewModel extends AndroidViewModel {
                     if (enrolledIds.contains(c.getId())) coursInscrits.add(c);
                 }
 
-                List<Assignments> assignmentsInscrits = new ArrayList<>();
+                Map<String, Courses> coursParId = new HashMap<>();
+                for (Courses c : coursInscrits) coursParId.put(c.getId(), c);
+
+                DbUtil db = new DbUtil(getApplication());
+                List<TravailAvecCours> assignmentsInscrits = new ArrayList<>();
                 for (Assignments a : service.getAssignments()) {
-                    if (enrolledIds.contains(a.getCourseId())) assignmentsInscrits.add(a);
+                    if (enrolledIds.contains(a.getCourseId())) {
+                        Soumission s = db.getSoumission(a.getId());
+                        a.setStatutCalcule(TravauxViewModel.calculerStatut(a, s));
+                        Courses c = coursParId.get(a.getCourseId());
+                        assignmentsInscrits.add(new TravailAvecCours(a,
+                                c != null ? c.getTitle() : "",
+                                c != null ? c.getCode()  : ""));
+                    }
                 }
+                db.close();
 
                 List<Quizzes> quizzesInscrits = new ArrayList<>();
                 for (Quizzes q : service.getQuizzes()) {
