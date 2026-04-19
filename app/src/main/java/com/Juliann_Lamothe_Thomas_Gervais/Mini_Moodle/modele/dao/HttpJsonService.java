@@ -27,8 +27,8 @@ import okhttp3.ResponseBody;
 
 public class HttpJsonService {
 
-    private static String URL_POINT_ENTRER = "http://10.0.2.2:3000";
-   // private static String URL_POINT_ENTRER = "http://10.0.0.251:3000";
+    //private static String URL_POINT_ENTRER = "http://10.0.2.2:3000";
+    private static String URL_POINT_ENTRER = "http://10.0.0.251:3000";
 
 
     //Recuperation des users
@@ -157,6 +157,43 @@ public class HttpJsonService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Users getUserByEmail(String email) throws IOException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okhttp3.HttpUrl url = okhttp3.HttpUrl.parse(URL_POINT_ENTRER + "/users")
+                .newBuilder()
+                .addQueryParameter("email", email)
+                .build();
+        Request request = new Request.Builder().url(url).get().build();
+        String body = okHttpClient.newCall(request).execute().body().string();
+        if (body.equals("[]")) return null;
+        Users[] users = new ObjectMapper().readValue(body, Users[].class);
+        return users.length > 0 ? users[0] : null;
+    }
+
+    public boolean mettreAJourProfil(String userId, String prenom, String nom,
+                                     String telephone, String photoUrl, String password)
+            throws IOException, JSONException {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        JSONObject obj = new JSONObject();
+        obj.put("prenom", prenom);
+        obj.put("nom", nom);
+        obj.put("telephone", telephone != null ? telephone : "");
+        obj.put("photoUrl", photoUrl != null ? photoUrl : "");
+        if (password != null && !password.isEmpty()) {
+            obj.put("password", password);
+        }
+
+        RequestBody corps = RequestBody.create(String.valueOf(obj), JSON);
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTRER + "/users/" + userId)
+                .patch(corps)
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+        return response.isSuccessful();
     }
 
     public Users connexion(String courriel, String password) throws IOException {

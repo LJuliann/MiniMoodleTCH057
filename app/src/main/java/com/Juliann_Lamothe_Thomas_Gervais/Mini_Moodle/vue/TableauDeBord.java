@@ -24,6 +24,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.SessionDao;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.ListeAnnoncesActivity;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.ListeTravauxActivity;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.ListeQuizActivity;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Assignments;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Courses;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Quizzes;
@@ -40,7 +44,8 @@ public class TableauDeBord extends AppCompatActivity {
     TableauDeBordViewModel viewModel;
     TextView tvBonjour, tvStatCours, tvStatTravaux, tvStatQuiz;
     LinearLayout llTravaux, llQuizzes, llAnnonces;
-    Button btnVoirCours, btnProfil;
+    Button btnVoirCours, btnProfil, btnDeconnexion;
+    TextView tvTitreAnnonces, tvTitreTravaux, tvTitreQuiz;
     List<String> enrolledIds;
 
     @Override
@@ -57,15 +62,14 @@ public class TableauDeBord extends AppCompatActivity {
         llQuizzes = findViewById(R.id.llQuizzes);
         llAnnonces = findViewById(R.id.llAnnonces);
         btnVoirCours = findViewById(R.id.btnVoirCours);
-        btnProfil    = findViewById(R.id.btnProfil);
+        btnProfil       = findViewById(R.id.btnProfil);
+        btnDeconnexion  = findViewById(R.id.btnDeconnexion);
+        tvTitreAnnonces = findViewById(R.id.tvTitreAnnonces);
+        tvTitreTravaux  = findViewById(R.id.tvTitreTravaux);
+        tvTitreQuiz     = findViewById(R.id.tvTitreQuiz);
 
-        String prenom = getIntent().getStringExtra("prenom");
         enrolledIds = getIntent().getStringArrayListExtra("enrolledCourseIds");
         if (enrolledIds == null) enrolledIds = new ArrayList<>();
-
-        if (prenom != null && !prenom.isEmpty()) {
-            tvBonjour.setText("Bonjour, " + prenom + " !");
-        }
 
         btnVoirCours.setOnClickListener(v -> {
             Intent intent = new Intent(this, ListeDesCours.class);
@@ -75,6 +79,24 @@ public class TableauDeBord extends AppCompatActivity {
 
         btnProfil.setOnClickListener(v ->
                 startActivity(new Intent(this, ProfilUtilisateur.class)));
+
+        btnDeconnexion.setOnClickListener(v -> seDeconnecter());
+
+        tvTitreAnnonces.setOnClickListener(v -> {
+            Intent i = new Intent(this, ListeAnnoncesActivity.class);
+            i.putStringArrayListExtra("enrolledCourseIds", new ArrayList<>(enrolledIds));
+            startActivity(i);
+        });
+        tvTitreTravaux.setOnClickListener(v -> {
+            Intent i = new Intent(this, ListeTravauxActivity.class);
+            i.putStringArrayListExtra("enrolledCourseIds", new ArrayList<>(enrolledIds));
+            startActivity(i);
+        });
+        tvTitreQuiz.setOnClickListener(v -> {
+            Intent i = new Intent(this, ListeQuizActivity.class);
+            i.putStringArrayListExtra("enrolledCourseIds", new ArrayList<>(enrolledIds));
+            startActivity(i);
+        });
 
         viewModel = new ViewModelProvider(this).get(TableauDeBordViewModel.class);
 
@@ -126,6 +148,12 @@ public class TableauDeBord extends AppCompatActivity {
         viewModel.getMessage().observe(this, msg ->
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show());
 
+        viewModel.getPrenom().observe(this, p -> {
+            if (p != null && !p.isEmpty()) {
+                tvBonjour.setText("Bonjour, " + p + " !");
+            }
+        });
+
         viewModel.chargerDonnees(enrolledIds);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -133,6 +161,19 @@ public class TableauDeBord extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    private void seDeconnecter() {
+        SessionDao.supprimerSession(this);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.chargerPrenom();
     }
 
     private void ajouterAnnonce(Courses cours, String texte) {

@@ -15,20 +15,29 @@ import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Assignments;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.DetailTravail;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TravauxAdapter extends RecyclerView.Adapter<TravauxAdapter.ViewHolder> {
 
-    private final List<Assignments> listeTravaux;
+    private List<Assignments> listeTravaux;
 
     public TravauxAdapter(List<Assignments> listeTravaux) {
         this.listeTravaux = listeTravaux;
     }
 
+    public void updateList(List<Assignments> nouvelle) {
+        this.listeTravaux = nouvelle;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_travail, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recycler_view_row_travail, parent, false);
         return new ViewHolder(view);
     }
 
@@ -36,16 +45,11 @@ public class TravauxAdapter extends RecyclerView.Adapter<TravauxAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Assignments travail = listeTravaux.get(position);
         holder.tvTitre.setText(travail.getTitle());
-        holder.tvDateLimite.setText("Date limite : " + travail.getDueDate());
-        holder.tvPoints.setText(travail.getTotalPoints() + " pts");
+        holder.tvEcheance.setText("Échéance : " + travail.getDueDate());
 
-        String statut = travail.getStatutCalcule() != null ? travail.getStatutCalcule() : "À faire";
+        String statut = calculerStatut(travail);
         holder.tvStatut.setText(statut);
         holder.tvStatut.setTextColor(couleurStatut(statut));
-
-        if ("Corrigé".equals(statut) && travail.getGrade() != null) {
-            holder.tvStatut.setText("Corrigé — " + travail.getGrade() + "/" + travail.getTotalPoints());
-        }
 
         holder.itemView.setOnClickListener(v -> {
             Context context = v.getContext();
@@ -66,24 +70,31 @@ public class TravauxAdapter extends RecyclerView.Adapter<TravauxAdapter.ViewHold
     @Override
     public int getItemCount() { return listeTravaux.size(); }
 
+    private String calculerStatut(Assignments a) {
+        if (a.getGrade() != null && a.getGrade() >= 0) return "Corrigé";
+        try {
+            Date limite = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(a.getDueDate());
+            if (limite != null && limite.before(new Date())) return "En retard";
+        } catch (Exception ignored) {}
+        return "À faire";
+    }
+
     private int couleurStatut(String statut) {
         switch (statut) {
-            case "Remis":    return Color.parseColor("#2E7D32"); // vert
-            case "En retard": return Color.parseColor("#C62828"); // rouge
-            case "Corrigé":  return Color.parseColor("#E65100"); // orange
-            default:         return Color.parseColor("#546E7A"); // gris
+            case "Corrigé":   return Color.parseColor("#E65100");
+            case "En retard": return Color.parseColor("#C62828");
+            default:          return Color.parseColor("#2E7D32");
         }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitre, tvDateLimite, tvStatut, tvPoints;
+        TextView tvTitre, tvEcheance, tvStatut;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitre = itemView.findViewById(R.id.tvTravailTitre);
-            tvDateLimite = itemView.findViewById(R.id.tvTravailDate);
-            tvStatut = itemView.findViewById(R.id.tvTravailStatut);
-            tvPoints = itemView.findViewById(R.id.tvTravailPoints);
+            tvTitre    = itemView.findViewById(R.id.tvTitreTravail);
+            tvEcheance = itemView.findViewById(R.id.tvEcheance);
+            tvStatut   = itemView.findViewById(R.id.tvStatut);
         }
     }
 }

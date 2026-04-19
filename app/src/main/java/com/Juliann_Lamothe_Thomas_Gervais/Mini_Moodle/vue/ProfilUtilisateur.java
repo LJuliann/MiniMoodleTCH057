@@ -16,15 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
-import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.DbUtil;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.ProfilViewModel;
 import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ProfilUtilisateur extends AppCompatActivity {
 
@@ -35,6 +33,7 @@ public class ProfilUtilisateur extends AppCompatActivity {
     Button btnSauvegarder, btnPrevisualiserPhoto, btnRetour;
     private final Handler debounceHandler = new Handler(Looper.getMainLooper());
     private Runnable debounceRunnable;
+    private ProfilViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +54,32 @@ public class ProfilUtilisateur extends AppCompatActivity {
         btnPrevisualiserPhoto = findViewById(R.id.btnPrevisualiserPhoto);
         btnRetour           = findViewById(R.id.btnProfilRetour);
 
-        // Fond circulaire pour l'avatar (placeholder par défaut)
         ivAvatar.setBackground(cercleBleue());
         ivAvatar.setClipToOutline(true);
 
-        chargerProfil();
+        viewModel = new ViewModelProvider(this).get(ProfilViewModel.class);
 
-        // Chargement automatique avec debounce pendant la saisie
+        viewModel.getProfil().observe(this, user -> {
+            if (user == null) return;
+            etPrenom.setText(user.getPrenom());
+            etNom.setText(user.getNom());
+            etCourriel.setText(user.getEmail());
+            etTelephone.setText(user.getTelephone());
+            etPhotoUrl.setText(user.getPhotoUrl());
+            String prenom = user.getPrenom() != null ? user.getPrenom() : "";
+            String nom    = user.getNom()    != null ? user.getNom()    : "";
+            tvNomComplet.setText((prenom + " " + nom).trim());
+            chargerAvatar(user.getPhotoUrl());
+        });
+
+        viewModel.getMessage().observe(this, msg -> {
+            if (msg == null) return;
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+            finish();
+        });
+
+        viewModel.chargerProfil();
+
         etPhotoUrl.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -85,30 +103,6 @@ public class ProfilUtilisateur extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-        });
-    }
-
-    private void chargerProfil() {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            DbUtil db = new DbUtil(this);
-            Users user = db.getProfil();
-            db.close();
-
-            runOnUiThread(() -> {
-                if (user == null) return;
-                etPrenom.setText(user.getPrenom());
-                etNom.setText(user.getNom());
-                etCourriel.setText(user.getEmail());
-                etTelephone.setText(user.getTelephone());
-                etPhotoUrl.setText(user.getPhotoUrl());
-
-                String prenom = user.getPrenom() != null ? user.getPrenom() : "";
-                String nom    = user.getNom()    != null ? user.getNom()    : "";
-                tvNomComplet.setText((prenom + " " + nom).trim());
-
-                chargerAvatar(user.getPhotoUrl());
-            });
         });
     }
 
@@ -155,28 +149,7 @@ public class ProfilUtilisateur extends AppCompatActivity {
         tvNomComplet.setText((prenom + " " + nom).trim());
         chargerAvatar(photoUrl);
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            DbUtil db = new DbUtil(this);
-
-            // Conserver le mot de passe actuel si le champ est laissé vide
-            String motDePasse = mdp;
-            if (motDePasse.isEmpty()) {
-                Users current = db.getProfil();
-                if (current != null && current.getPassword() != null) {
-                    motDePasse = current.getPassword();
-                }
-            }
-
-            db.sauvegarderProfil(prenom, nom, courriel, telephone, photoUrl, motDePasse);
-            db.close();
-
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Profil mis à jour.", Toast.LENGTH_SHORT).show();
-                etPassword.setText("");
-                etPasswordConfirm.setText("");
-            });
-        });
+        viewModel.sauvegarderProfil(prenom, nom, courriel, telephone, photoUrl, mdp);
     }
 
     private String texte(TextInputEditText champ) {

@@ -4,11 +4,11 @@
       "id": "1",
       "username": "Sara",
       "email": "sara@etsmtl.ca",
-      "password": "111",
+      "password": "1234",
       "nom": "Ouni",
       "prenom": "Sara",
       "telephone": "514-123-4567",
-      "photoUrl": "https://example.com/photo1.jpg",
+      "photoUrl": "https://www.goodstickers.uk/70625/mortal-kombat-logo-sticker.jpg",
       "enrolledCourseIds": [
         "1",
         "2",
@@ -57,6 +57,26 @@
       ],
       "quizResults": [],
       "completedAssignmentIds": []
+    },
+    {
+      "username": "",
+      "email": "Pat@gmail.com",
+      "password": "12345",
+      "nom": "Xan",
+      "prenom": "Pat",
+      "telephone": "514222222",
+      "photoUrl": "",
+      "id": "d9NGqer"
+    },
+    {
+      "username": "sas",
+      "email": "test@gmail.com",
+      "password": "12345",
+      "nom": "aaa",
+      "prenom": "asa",
+      "telephone": "3333333",
+      "photoUrl": "",
+      "id": "lgxU74S"
     }
   ],
   "courses": [

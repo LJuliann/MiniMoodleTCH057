@@ -19,12 +19,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
+import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.SQL.DbUtil;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.modele.entite.Users;
 import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.UsersViewModel;
 
+import java.util.ArrayList;
+
 public class Inscription extends AppCompatActivity implements View.OnClickListener {
 
-    EditText etNom,etPrenom,etCourriel,etTelephone;
+    EditText etNom, etPrenom, etCourriel, etTelephone, etUsername;
     EditText motDePasse;
     Button btnInscription, btnLogin;
 
@@ -43,6 +46,7 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
         etPrenom = findViewById(R.id.etInscriptionPrenom);
         etTelephone = findViewById(R.id.etInscriptionNumeroTelephone);
         etCourriel = findViewById(R.id.etInscriptionCourriel);
+        etUsername = findViewById(R.id.etInscriptionUsername);
         motDePasse = findViewById(R.id.etInscriptionMotDePasse);
 
         //Button
@@ -61,14 +65,23 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
         });
 
         usersViewModel.getSuccess().observe(this, success -> {
-                    if (success) {
-                        Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
-                        intent = new Intent(this, ListeDesCours.class);
-                        activityResultLauncher.launch(intent);
-                    } else {
-                        Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            Toast.makeText(this, usersViewModel.getMessage().getValue(), Toast.LENGTH_SHORT).show();
+            if (success) {
+                DbUtil db = new DbUtil(this);
+                db.sauvegarderProfil(
+                        etPrenom.getText().toString(),
+                        etNom.getText().toString(),
+                        etCourriel.getText().toString(),
+                        etTelephone.getText().toString(),
+                        "", "");
+                db.close();
+
+                Intent i = new Intent(this, TableauDeBord.class);
+                i.putStringArrayListExtra("enrolledCourseIds", new ArrayList<>());
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -84,9 +97,10 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
         //Quand la personne s'inscrit.
         if(v == btnInscription){
             if (checkSelfPermission("android.permission.INTERNET") == PackageManager.PERMISSION_GRANTED) {
-                if(etNom.getText().toString().isEmpty() || etPrenom.getText().toString().isEmpty() || etCourriel.getText().toString().isEmpty() ||
-                        etTelephone.getText().toString().isEmpty() || motDePasse.getText().toString().isEmpty()){
-                    Toast.makeText(this,"veuilliez de remplir tous les champs",Toast.LENGTH_SHORT).show();
+                if(etNom.getText().toString().isEmpty() || etPrenom.getText().toString().isEmpty() ||
+                        etCourriel.getText().toString().isEmpty() || etTelephone.getText().toString().isEmpty() ||
+                        motDePasse.getText().toString().isEmpty() || etUsername.getText().toString().isEmpty()){
+                    Toast.makeText(this,"Veuillez remplir tous les champs",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String nom = etNom.getText().toString();
@@ -94,7 +108,8 @@ public class Inscription extends AppCompatActivity implements View.OnClickListen
                 String courriel = etCourriel.getText().toString();
                 String telephone = etTelephone.getText().toString();
                 String password = motDePasse.getText().toString();
-                Users users = new Users("", courriel, password, nom, prenom, telephone, "", "");
+                String username = etUsername.getText().toString();
+                Users users = new Users(username, courriel, password, nom, prenom, telephone, "", "");
                 usersViewModel.enregistereUser(users);
             } else {
                 requestPermissions(new String[]{"android.permission.INTERNET"},1);

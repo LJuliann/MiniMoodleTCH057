@@ -39,6 +39,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull CoursesAdapter.ViewHolder holder, int position) {
         Courses cours = listeCours.get(position);
+        holder.tvCodeCours.setText(cours.getCode());
         holder.tvNomCours.setText(cours.getTitle());
         holder.tvNomProf.setText(cours.getTeacher());
         holder.tvSession.setText(cours.getSession());
@@ -63,6 +64,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tvNomCours;
+        TextView tvCodeCours;
         TextView tvNomProf;
         TextView tvSession;
         ImageView ivBanniere;
@@ -71,10 +73,11 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tvNomCours = itemView.findViewById(R.id.tvRecyclerNomCours);
-            tvNomProf  = itemView.findViewById(R.id.tvRecyclerViewNomProf);
-            tvSession  = itemView.findViewById(R.id.tvRecyclerViewSession);
-            ivBanniere = itemView.findViewById(R.id.ivCoursBanniere);
+            tvNomCours  = itemView.findViewById(R.id.tvRecyclerNomCours);
+            tvCodeCours = itemView.findViewById(R.id.tvRecyclerCodeCours);
+            tvNomProf   = itemView.findViewById(R.id.tvRecyclerViewNomProf);
+            tvSession   = itemView.findViewById(R.id.tvRecyclerViewSession);
+            ivBanniere  = itemView.findViewById(R.id.ivCoursBanniere);
 
             itemView.setOnClickListener(this);
         }

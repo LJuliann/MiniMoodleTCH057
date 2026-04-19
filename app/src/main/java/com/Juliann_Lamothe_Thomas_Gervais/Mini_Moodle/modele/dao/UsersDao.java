@@ -17,6 +17,13 @@ public class UsersDao {
         return new HttpJsonService().enregistrerUser(user);
     }
 
+    public static Users getUserByEmail(String email) throws IOException {
+        return new HttpJsonService().getUserByEmail(email);
+    }
 
-
+    public static boolean mettreAJourProfil(String userId, String prenom, String nom,
+                                             String telephone, String photoUrl, String password)
+            throws IOException, JSONException {
+        return new HttpJsonService().mettreAJourProfil(userId, prenom, nom, telephone, photoUrl, password);
+    }
 }

@@ -46,12 +46,28 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnProfil"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mon profil" />
+                android:orientation="vertical"
+                android:gravity="end">
+
+                <Button
+                    android:id="@+id/btnProfil"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon profil" />
+
+                <Button
+                    android:id="@+id/btnDeconnexion"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Déconnexion"
+                    android:textColor="#C62828" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -152,13 +168,16 @@
             android:layout_marginBottom="16dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvTitreAnnonces"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Annonces récentes"
+            android:text="Annonces récentes ›"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginBottom="8dp" />
+            android:textColor="#1A237E"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -177,13 +196,16 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvTitreTravaux"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Travaux à remettre"
+            android:text="Travaux à remettre ›"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginBottom="8dp" />
+            android:textColor="#1A237E"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -202,13 +224,16 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tvTitreQuiz"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quiz disponibles"
+            android:text="Quiz disponibles ›"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginBottom="8dp" />
+            android:textColor="#1A237E"
+            android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
