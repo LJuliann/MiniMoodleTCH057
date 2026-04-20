@@ -1,5 +1,6 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.adapteur;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.ViewHold
         this.listeCours = listeCours;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateList(List<Courses> nouvelleListe) {
         this.listeCours = nouvelleListe;
         notifyDataSetChanged();

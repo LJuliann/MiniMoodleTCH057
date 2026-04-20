@@ -1,5 +1,6 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.adapteur;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
         this.liste = liste;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateList(List<QuizAvecStatut> nouvelle) {
         this.liste = nouvelle;
         notifyDataSetChanged();

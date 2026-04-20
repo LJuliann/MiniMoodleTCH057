@@ -1,5 +1,6 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -45,6 +46,7 @@ public class TableauDeBord extends AppCompatActivity {
     TextView tvTitreAnnonces, tvTitreTravaux, tvTitreQuiz;
     List<String> enrolledIds;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -252,6 +254,7 @@ public class TableauDeBord extends AppCompatActivity {
         parent.addView(tv);
     }
 
+    @SuppressLint("SetTextI18n")
     private void ajouterTravailCliquable(TravailAvecCours item) {
         Assignments a = item.travail;
         String statut = a.getStatutCalcule() != null ? a.getStatutCalcule() : "À faire";

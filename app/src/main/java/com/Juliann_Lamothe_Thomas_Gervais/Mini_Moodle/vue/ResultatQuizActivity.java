@@ -1,5 +1,6 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.R;
 
 public class ResultatQuizActivity extends AppCompatActivity {
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

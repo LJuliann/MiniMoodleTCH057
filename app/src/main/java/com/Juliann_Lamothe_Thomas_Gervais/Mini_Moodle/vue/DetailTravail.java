@@ -1,5 +1,6 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.viewModel.TravauxViewModel
 
 public class DetailTravail extends AppCompatActivity {
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

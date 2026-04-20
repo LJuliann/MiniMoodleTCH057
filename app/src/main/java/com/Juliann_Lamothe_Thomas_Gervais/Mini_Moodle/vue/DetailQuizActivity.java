@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -46,6 +47,13 @@ public class DetailQuizActivity extends AppCompatActivity {
         btnSuivant = findViewById(R.id.btnQuizSuivant);
 
         findViewById(R.id.btnQuizRetour).setOnClickListener(v -> confirmerAbandon());
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                confirmerAbandon();
+            }
+        });
 
         // Désérialiser le quiz depuis l'intent
         String quizJson = getIntent().getStringExtra("quizJson");
@@ -139,8 +147,4 @@ public class DetailQuizActivity extends AppCompatActivity {
                 .show();
     }
 
-    @Override
-    public void onBackPressed() {
-        confirmerAbandon();
-    }
 }

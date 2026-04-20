@@ -1,5 +1,6 @@
 package com.Juliann_Lamothe_Thomas_Gervais.Mini_Moodle.vue.adapteur;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,6 +27,7 @@ public class TravauxAdapter extends RecyclerView.Adapter<TravauxAdapter.ViewHold
         this.listeTravaux = listeTravaux;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateList(List<TravailAvecCours> nouvelle) {
         this.listeTravaux = nouvelle;
         notifyDataSetChanged();
